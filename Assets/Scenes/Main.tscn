@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://3l3gtuv0xh4t"]
+[gd_scene load_steps=10 format=3 uid="uid://3l3gtuv0xh4t"]
 
 [ext_resource type="Texture2D" uid="uid://mfyo6f5ihp2l" path="res://Assets/Raw/groundtiles.png" id="1_alfpc"]
 [ext_resource type="Script" path="res://Assets/Scripts/game_controller.gd" id="1_avn6v"]
@@ -93,6 +93,7 @@ zoom = Vector2(2, 2)
 
 [node name="Hud" parent="Player/Camera2D" node_paths=PackedStringArray("player_node") instance=ExtResource("4_n1k82")]
 player_node = NodePath("../..")
+
 [node name="Goal1" type="Area2D" parent="."]
 position = Vector2(-186, -224)
 collision_layer = 2
