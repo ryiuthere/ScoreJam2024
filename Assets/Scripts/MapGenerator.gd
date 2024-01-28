@@ -1,23 +1,27 @@
 extends TileMap
 
+var CONNECTION_RANDOMIZER_WEIGHT := [ 0.5, 0.5, 0.5, 0.5, 0.5, 0.35, 0.35, 0.5, 0.5, 0.5, 0.5, 0.5]
 
 var tileset_width := 35
 var origin_initial_coords := Vector2i(-300, -tileset_width)
 var map_initial_coords := Vector2i(18, -2 * tileset_width + 1)
+var tileset_count = {}
 
 func _ready() -> void:
+	calc_tileset_count()
 	randomize_tileset()
 
 func randomize_tileset() -> void:
 	var tileset = get_randomized_tileset()
 	for i in range(3):
 		for j in range(3):
-			draw_tile(Vector2i(i,j), tileset[i][j])
+			var variant = randi() % tileset_count[tileset[i][j]]
+			draw_tile(Vector2i(i,j), tileset[i][j], variant)
 	for i in range(-20, 165):
 		for j in range(map_initial_coords.y, map_initial_coords.y + 3 * tileset_width):
 			var type_string = ""
-			var position = Vector2i(i,j)
-			var tile_data = get_cell_tile_data(0, position)
+			var target_position = Vector2i(i,j)
+			var tile_data = get_cell_tile_data(0, target_position)
 			if tile_data:
 				for y in range(-1,2):
 					for x in range(-1,2):
@@ -27,7 +31,56 @@ func randomize_tileset() -> void:
 							type_string += "1"
 						else:
 							type_string += "0"
-				set_cell(0, position, get_cell_source_id(0, position), get_atlas(type_string))
+				set_cell(0, target_position, get_cell_source_id(0, target_position), get_atlas(type_string))
+
+func calc_tileset_count() -> void:
+	for i in range(16):
+		var tileset_exists = true
+		var count = 0
+		while tileset_exists:
+			var tile_id = get_cell_tile_data(0, origin_initial_coords - Vector2i(i * tileset_width, count * tileset_width))
+			if (tile_id):
+				count += 1
+			else:
+				tileset_exists = false
+				tileset_count[map_to_type(i)] = count
+
+func map_to_type(tileset_num: int) -> String:
+	match tileset_num:
+		0:
+			return "1111"
+		1:
+			return "1110"
+		2:
+			return "0111"
+		3:
+			return "1011"
+		4:
+			return "1101"
+		5:
+			return "1100"
+		6:
+			return "1010"
+		7:
+			return "1001"
+		8:
+			return "0110"
+		9:
+			return "0101"
+		10:
+			return "0011"
+		11:
+			return "1000"
+		12:
+			return "0100"
+		13:
+			return "0010"
+		14:
+			return "0001"
+		15:
+			return "0000"
+		_:
+			return "1111"
 
 func get_atlas(type: String) -> Vector2i:
 	match type:
@@ -61,8 +114,8 @@ func get_atlas(type: String) -> Vector2i:
 		_:
 			return Vector2i(1,1)
 
-func draw_tile(location: Vector2i, type: String) -> void:
-	var tile_location = get_tileset_location(type)
+func draw_tile(location: Vector2i, type: String, variant: int) -> void:
+	var tile_location = get_tileset_location(type, variant)
 	var target_location = map_initial_coords + location * tileset_width 
 	for i in range(tileset_width):
 		for j in range(tileset_width):
@@ -75,50 +128,51 @@ func draw_tile(location: Vector2i, type: String) -> void:
 			else:
 				set_cell(0, target_location + Vector2i(i,j), -1)
 
-func get_tileset_location(type: String) -> Vector2i:
+func get_tileset_location(type: String, variant: int) -> Vector2i:
 	match type:
 		"1111":
-			return origin_initial_coords
+			return origin_initial_coords - Vector2i(0, variant * tileset_width)
 		"1110":
-			return origin_initial_coords - Vector2i(tileset_width, 0)
+			return origin_initial_coords - Vector2i(tileset_width, variant * tileset_width)
 		"0111":
-			return origin_initial_coords - Vector2i(tileset_width * 2, 0)
+			return origin_initial_coords - Vector2i(tileset_width * 2, variant * tileset_width)
 		"1011":
-			return origin_initial_coords - Vector2i(tileset_width * 3, 0)
+			return origin_initial_coords - Vector2i(tileset_width * 3, variant * tileset_width)
 		"1101":
-			return origin_initial_coords - Vector2i(tileset_width * 4, 0)
+			return origin_initial_coords - Vector2i(tileset_width * 4, variant * tileset_width)
 		"1100":
-			return origin_initial_coords - Vector2i(tileset_width * 5, 0)
+			return origin_initial_coords - Vector2i(tileset_width * 5, variant * tileset_width)
 		"1010":
-			return origin_initial_coords - Vector2i(tileset_width * 6, 0)
+			return origin_initial_coords - Vector2i(tileset_width * 6, variant * tileset_width)
 		"1001":
-			return origin_initial_coords - Vector2i(tileset_width * 7, 0)
+			return origin_initial_coords - Vector2i(tileset_width * 7, variant * tileset_width)
 		"0110":
-			return origin_initial_coords - Vector2i(tileset_width * 8, 0)
+			return origin_initial_coords - Vector2i(tileset_width * 8, variant * tileset_width)
 		"0101":
-			return origin_initial_coords - Vector2i(tileset_width * 9, 0)
+			return origin_initial_coords - Vector2i(tileset_width * 9, variant * tileset_width)
 		"0011":
-			return origin_initial_coords - Vector2i(tileset_width * 10, 0)
+			return origin_initial_coords - Vector2i(tileset_width * 10, variant * tileset_width)
 		"1000":
-			return origin_initial_coords - Vector2i(tileset_width * 11, 0)
+			return origin_initial_coords - Vector2i(tileset_width * 11, variant * tileset_width)
 		"0100":
-			return origin_initial_coords - Vector2i(tileset_width * 12, 0)
+			return origin_initial_coords - Vector2i(tileset_width * 12, variant * tileset_width)
 		"0010":
-			return origin_initial_coords - Vector2i(tileset_width * 13, 0)
+			return origin_initial_coords - Vector2i(tileset_width * 13, variant * tileset_width)
 		"0001":
-			return origin_initial_coords - Vector2i(tileset_width * 14, 0)
+			return origin_initial_coords - Vector2i(tileset_width * 14, variant * tileset_width)
 		"0000":
-			return origin_initial_coords - Vector2i(tileset_width * 15, 0)
+			return origin_initial_coords - Vector2i(tileset_width * 15, variant * tileset_width)
 		_:
 			return origin_initial_coords
 
 func get_randomized_tileset() -> Array:
+	var connections : Array
 	var tiles := [["", "", ""],["", "", ""],["", "", ""]]
-	var path_exists = false
-	while (!path_exists):
-		var connections = []
+	var valid_map = false
+	while (!valid_map):
+		connections = []
 		for i in range(12):
-			connections.append("1" if randf_range(0,1) < 0.5 else "0")
+			connections.append("1" if randf_range(0,1) < CONNECTION_RANDOMIZER_WEIGHT[i] else "0")
 		tiles[0][0] = "0%s%s0" % [connections[0], connections[2]]
 		tiles[0][1] = "%s%s%s1" % [connections[2],connections[5],connections[7]]
 		tiles[0][2] = "%s%s00" % [connections[7], connections[10]]
@@ -128,7 +182,7 @@ func get_randomized_tileset() -> Array:
 		tiles[2][0] = "00%s%s" % [connections[4], connections[1]]
 		tiles[2][1] = "%s1%s%s" % [connections[4],connections[9],connections[6]]
 		tiles[2][2] = "%s00%s" % [connections[9], connections[11]]
-		path_exists = path_exists(tiles)
+		valid_map = path_exists(tiles)
 	return tiles
 
 func path_exists(tiles: Array) -> bool:
@@ -180,11 +234,11 @@ class MapPosition:
 		if connections[3] == "1" and check_bounds(next_position) and !searched[next_position.x][next_position.y]:
 			connected_nodes.append(create_child(tiles, position + Vector2i.LEFT))
 		return connected_nodes
-	func create_child(tiles: Array, position: Vector2i) -> MapPosition:
+	func create_child(tiles: Array, target_position: Vector2i) -> MapPosition:
 		var child = MapPosition.new()
-		child.connections = tiles[position.x][position.y]
-		child.position = position
+		child.connections = tiles[target_position.x][target_position.y]
+		child.position = target_position
 		return child
 		
-	func check_bounds(position: Vector2i) -> bool:
-		return position.x >= 0 and position.x < 3 and position.y >= 0 and position.y < 3
+	func check_bounds(target_position: Vector2i) -> bool:
+		return target_position.x >= 0 and target_position.x < 3 and target_position.y >= 0 and target_position.y < 3
