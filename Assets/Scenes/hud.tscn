@@ -40,6 +40,7 @@ scale = Vector2(0.47449, 0.369254)
 texture = ExtResource("2_jerb6")
 
 [node name="TimeText" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0.823529)
 layout_mode = 2
 offset_left = -48.0
 offset_top = -118.0
@@ -51,6 +52,7 @@ label_settings = SubResource("LabelSettings_cv2j2")
 horizontal_alignment = 1
 
 [node name="ScoreText" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0.823529)
 layout_mode = 2
 offset_left = -28.0
 offset_top = -92.0
