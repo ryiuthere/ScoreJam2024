@@ -98,8 +98,8 @@ _data = {
 "walk_right": SubResource("Animation_5pie3")
 }
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_f43ys"]
-radius = 15.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bpknv"]
+radius = 9.0
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_40a31"]
 particle_flag_disable_z = true
@@ -132,7 +132,7 @@ hframes = 4
 frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_f43ys")
+shape = SubResource("CapsuleShape2D_bpknv")
 
 [node name="HoverParticles" type="GPUParticles2D" parent="."]
 emitting = false
@@ -141,6 +141,6 @@ process_material = SubResource("ParticleProcessMaterial_40a31")
 speed_scale = 1.65
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 0.3
 one_shot = true
 script = ExtResource("3_d1qb6")
