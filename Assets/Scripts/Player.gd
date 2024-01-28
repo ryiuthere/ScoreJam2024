@@ -1,23 +1,23 @@
 extends CharacterBody2D
 
-var MAX_SPEED := Vector2(200,300)
-var ACCELERATION := 2000
-var FRICTION := 900
-var SLOW_FORCE := 2000
-var GRAVITY := 500
-var JUMP_FORCE := 15000
-var DASH_FORCE := Vector2(50000,25000)
-var HOVER_FORCE := 900
-var HOVER_LENGTH := 0.7
-var DASH_COOLDOWN := 1.0
+var MAX_SPEED := Vector2(200,300) # Maximum speed in x and y directions
+var ACCELERATION := 2000 # Direction for horizontal momentum
+var FRICTION := 900 # Horizontal drag when not moving
+var SLOW_FORCE := 2000 # Force for slowing down to max speed if going over
+var GRAVITY := 500 # Gravity
+var JUMP_FORCE := 15000 # Force applied when jumping
+var DASH_FORCE := Vector2(50000,25000) # Force applied when dashing in x or y direction
+var HOVER_FORCE := 900 # Force applied when hovering
+var HOVER_LENGTH := 0.7 # Length (in seconds) of hover time before touching groud
+var DASH_COOLDOWN := 1.0 # Max cooldown between dashes
 
-@onready var axis := Vector2.ZERO
-@onready var dash_axis := Vector2.ZERO
-@onready var jump_press : bool
-@onready var jump_hold : bool
-@onready var hover : float
-@onready var can_hover : bool
-@onready var dash_cooldown : float
+@onready var axis := Vector2.ZERO # Input Axis
+@onready var dash_axis := Vector2.ZERO # Dash Axis
+@onready var jump_press : bool # Was jump just pressed?
+@onready var jump_hold : bool # Is jump held down?
+@onready var hover : float # Hover time left before touching ground
+@onready var can_hover : bool # Can player hover in current state?
+@onready var dash_cooldown : float # Cooldown between dashes
 
 const DashParticlesResource = preload("res://Assets/Scenes/DashParticles.tscn")
 
