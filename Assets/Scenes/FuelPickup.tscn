@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://0ubsyswrhp5c"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/FuelPickup.gd" id="1_6b2lv"]
+[ext_resource type="Texture2D" uid="uid://cbbw6cjex3lgg" path="res://Assets/Raw/TempGas.png" id="1_q3lit"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bu4qo"]
+size = Vector2(32, 32)
+
+[node name="FuelPickup" type="Area2D"]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_6b2lv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_q3lit")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_bu4qo")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -105,10 +105,13 @@ func apply_gravity(amount: float, delta: float) -> void:
 		velocity.y += SLOW_FORCE * delta
 	else:
 		velocity.y += amount * delta
-	
+
 func apply_jump(amount: float) -> void:
 	velocity.y -= amount
 
 func apply_dash(dash_vector: Vector2) -> void:
 	velocity = Vector2(dash_vector.x * DASH_FORCE.x, dash_vector.y * DASH_FORCE.y)
 	self.add_child(DashParticlesResource.instantiate())
+
+func refill_fuel(amount: float) -> void:
+	fuel_amt = clamp(fuel_amt + amount, 0, 1)

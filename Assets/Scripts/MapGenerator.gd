@@ -1,6 +1,8 @@
 extends TileMap
 
-var CONNECTION_RANDOMIZER_WEIGHT := [ 0.5, 0.5, 0.5, 0.5, 0.5, 0.35, 0.35, 0.5, 0.5, 0.5, 0.5, 0.5]
+const CONNECTION_RANDOMIZER_WEIGHT := [ 0.5, 0.5, 0.5, 0.5, 0.5, 0.35, 0.35, 0.5, 0.5, 0.5, 0.5, 0.5]
+const FUEL_PICKUP := preload("res://Assets/Scenes/FuelPickup.tscn") as PackedScene
+const FUEL_PICKUP_ATLAS = Vector2i(1,4)
 
 var tileset_width := 35
 var origin_initial_coords := Vector2i(-300, -tileset_width)
@@ -12,6 +14,10 @@ func _ready() -> void:
 	randomize_tileset()
 
 func randomize_tileset() -> void:
+	var old_pickup_nodes = get_tree().get_nodes_in_group("pickups")
+	for node in old_pickup_nodes:
+		node.queue_free()
+	
 	var tileset = get_randomized_tileset()
 	for i in range(3):
 		for j in range(3):
@@ -23,15 +29,24 @@ func randomize_tileset() -> void:
 			var target_position = Vector2i(i,j)
 			var tile_data = get_cell_tile_data(0, target_position)
 			if tile_data:
-				for y in range(-1,2):
-					for x in range(-1,2):
-						var position_neighbor = Vector2i(i + x, j + y)
-						var tile_id_neighbor = get_cell_tile_data(0, position_neighbor)
-						if tile_id_neighbor:
-							type_string += "1"
-						else:
-							type_string += "0"
-				set_cell(0, target_position, get_cell_source_id(0, target_position), get_atlas(type_string))
+				var current_target_atlas = get_cell_atlas_coords(0,target_position)
+				if (current_target_atlas == FUEL_PICKUP_ATLAS):
+					var global_position = to_global(map_to_local(target_position))
+					set_cell(0, target_position, -1)
+					var pickup = FUEL_PICKUP.instantiate() as Node2D
+					pickup.position = global_position
+					add_child(pickup)
+					pickup.add_to_group("pickups")
+				else:
+					for y in range(-1,2):
+						for x in range(-1,2):
+							var position_neighbor = Vector2i(i + x, j + y)
+							var tile_id_neighbor = get_cell_tile_data(0, position_neighbor)
+							if tile_id_neighbor and get_cell_atlas_coords(0, position_neighbor) != FUEL_PICKUP_ATLAS:
+								type_string += "1"
+							else:
+								type_string += "0"
+					set_cell(0, target_position, get_cell_source_id(0, target_position), get_atlas(type_string))
 
 func calc_tileset_count() -> void:
 	for i in range(16):
