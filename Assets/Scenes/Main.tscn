@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://3l3gtuv0xh4t"]
+[gd_scene load_steps=7 format=3 uid="uid://3l3gtuv0xh4t"]
 
 [ext_resource type="Texture2D" uid="uid://mfyo6f5ihp2l" path="res://Assets/Raw/groundtiles.png" id="1_alfpc"]
 [ext_resource type="Script" path="res://Assets/Scripts/MapGenerator.gd" id="2_lerxm"]
 [ext_resource type="PackedScene" uid="uid://dxuenr2hv1fwp" path="res://Assets/Scenes/Player.tscn" id="2_uasqk"]
+[ext_resource type="PackedScene" uid="uid://dgmwmnwapm3fu" path="res://Assets/Scenes/hud.tscn" id="4_n1k82"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hibof"]
 resource_name = "Map Tiles"
@@ -79,3 +80,6 @@ position = Vector2(-157, -168)
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(0, -50)
 zoom = Vector2(2, 2)
+
+[node name="Hud" parent="Player/Camera2D" node_paths=PackedStringArray("player_node") instance=ExtResource("4_n1k82")]
+player_node = NodePath("../..")
