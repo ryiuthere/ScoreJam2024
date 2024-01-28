@@ -14,6 +14,10 @@ func _ready() -> void:
 	randomize_tileset()
 
 func randomize_tileset() -> void:
+	var old_pickup_nodes = get_tree().get_nodes_in_group("pickups")
+	for node in old_pickup_nodes:
+		node.queue_free()
+	
 	var tileset = get_randomized_tileset()
 	for i in range(3):
 		for j in range(3):
@@ -32,12 +36,13 @@ func randomize_tileset() -> void:
 					var pickup = FUEL_PICKUP.instantiate() as Node2D
 					pickup.position = global_position
 					add_child(pickup)
+					pickup.add_to_group("pickups")
 				else:
 					for y in range(-1,2):
 						for x in range(-1,2):
 							var position_neighbor = Vector2i(i + x, j + y)
 							var tile_id_neighbor = get_cell_tile_data(0, position_neighbor)
-							if tile_id_neighbor:
+							if tile_id_neighbor and get_cell_atlas_coords(0, position_neighbor) != FUEL_PICKUP_ATLAS:
 								type_string += "1"
 							else:
 								type_string += "0"
