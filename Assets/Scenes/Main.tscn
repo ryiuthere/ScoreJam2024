@@ -82,8 +82,9 @@ radius = 76.99
 [sub_resource type="CircleShape2D" id="CircleShape2D_ahel4"]
 radius = 76.99
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("timer")]
 script = ExtResource("1_avn6v")
+timer = NodePath("GameTimer")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_vre1e")
