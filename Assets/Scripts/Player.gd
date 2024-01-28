@@ -10,6 +10,9 @@ var DASH_FORCE := Vector2(50000,25000) # Force applied when dashing in x or y di
 var HOVER_FORCE := 900 # Force applied when hovering
 var HOVER_LENGTH := 0.7 # Length (in seconds) of hover time before touching groud
 var DASH_COOLDOWN := 1.0 # Max cooldown between dashes
+const DASH_COST := (1/6.8) # How much fuel dashing costs
+const FUEL_CONSUMPTION_RATE := 0.21 # Rate of fuel consumption
+const MIN_DASH_FUEL_REQUIRED := (2.25/8.5) # Min fuel to dash
 
 @onready var axis := Vector2.ZERO # Input Axis
 @onready var dash_axis := Vector2.ZERO # Dash Axis
@@ -18,6 +21,7 @@ var DASH_COOLDOWN := 1.0 # Max cooldown between dashes
 @onready var hover : float # Hover time left before touching ground
 @onready var can_hover : bool # Can player hover in current state?
 @onready var dash_cooldown : float # Cooldown between dashes
+@onready var fuel_amt := 1.0 # Current fuel amount
 
 const DashParticlesResource = preload("res://Assets/Scenes/DashParticles.tscn")
 
@@ -66,13 +70,15 @@ func move(delta) -> void:
 		if (jump_press and is_on_floor()):
 			hover = HOVER_LENGTH
 			apply_jump(JUMP_FORCE * delta)
-		elif (can_hover and hover > 0):
+		elif (can_hover and hover > 0 and fuel_amt > 0.0):
 			hovering = true
 			hover -= delta
 			apply_jump(HOVER_FORCE * delta)
-	if (dash_cooldown <= 0 and dash_axis != Vector2.ZERO):
+			fuel_amt -= FUEL_CONSUMPTION_RATE * delta
+	if (dash_cooldown <= 0 and dash_axis != Vector2.ZERO and fuel_amt > MIN_DASH_FUEL_REQUIRED):
 		apply_dash(dash_axis * delta)
 		dash_cooldown = DASH_COOLDOWN
+		fuel_amt -= DASH_COST
 	elif (dash_cooldown > 0):
 		dash_cooldown -= delta
 	$HoverParticles.emitting = hovering
