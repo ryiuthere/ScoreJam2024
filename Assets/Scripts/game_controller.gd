@@ -1,12 +1,13 @@
 extends Node
 
 var target_goal := "right"
-var score = 0
+@export var score := 0
+@export var score_increment := 1000
 
 func touch_goal(goal: String):
 	if target_goal == goal:
 		target_goal = "right" if goal == "left" else "left"
-		score += 1
+		score += score_increment
 		$TileMap.randomize_tileset()
 
 func _on_goal_1_body_entered(body):
