@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://vqmuo2jh5j4p"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/ScorePickup.gd" id="1_nhv5b"]
+[ext_resource type="Texture2D" uid="uid://cbbw6cjex3lgg" path="res://Assets/Raw/TempGas.png" id="2_4h4ee"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bu4qo"]
+size = Vector2(26, 26)
+
+[node name="ScorePickup" type="Area2D"]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_nhv5b")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1, 1)
+scale = Vector2(0.8125, 0.8125)
+texture = ExtResource("2_4h4ee")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_bu4qo")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

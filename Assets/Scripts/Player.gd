@@ -28,6 +28,8 @@ const FASTFALL_THRESHOLD := 250 # Maximum downwards velocity to fastfall
 
 const DashParticlesResource = preload("res://Assets/Scenes/DashParticles.tscn")
 
+signal ScorePickup(amount: int)
+
 func _physics_process(delta) -> void:
 	move(delta)
 
@@ -91,7 +93,6 @@ func move(delta) -> void:
 	move_and_slide()
 
 func apply_friction(amount: float, target: float) -> void:
-	var test = velocity.x
 	if abs(velocity.x) - abs(target) > amount:
 		velocity.x += amount if velocity.x < 0 else -amount
 	else:
@@ -124,4 +125,7 @@ func apply_dash(dash_vector: Vector2) -> void:
 	self.add_child(DashParticlesResource.instantiate())
 
 func refill_fuel(amount: float) -> void:
-	fuel_amt = clamp(fuel_amt + amount , 0, 1)
+	fuel_amt = clamp(fuel_amt + amount, 0, 1)
+
+func score_pickup() -> void:
+	ScorePickup.emit(500)
