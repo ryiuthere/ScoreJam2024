@@ -35,7 +35,6 @@ func randomize_tileset() -> void:
 					set_cell(0, target_position, -1)
 					var pickup = FUEL_PICKUP.instantiate() as Node2D
 					pickup.position = global_position
-					add_child(pickup)
 					pickup.add_to_group("pickups")
 				else:
 					for y in range(-1,2):

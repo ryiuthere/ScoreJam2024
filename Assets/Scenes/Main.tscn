@@ -1,10 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://3l3gtuv0xh4t"]
+[gd_scene load_steps=13 format=3 uid="uid://3l3gtuv0xh4t"]
 
 [ext_resource type="Texture2D" uid="uid://mfyo6f5ihp2l" path="res://Assets/Raw/groundtiles.png" id="1_alfpc"]
 [ext_resource type="Script" path="res://Assets/Scripts/game_controller.gd" id="1_avn6v"]
 [ext_resource type="Script" path="res://Assets/Scripts/MapGenerator.gd" id="2_lerxm"]
 [ext_resource type="PackedScene" uid="uid://dxuenr2hv1fwp" path="res://Assets/Scenes/Player.tscn" id="2_uasqk"]
 [ext_resource type="PackedScene" uid="uid://dgmwmnwapm3fu" path="res://Assets/Scenes/hud.tscn" id="4_n1k82"]
+[ext_resource type="AudioStream" uid="uid://d2x540e1pmr3j" path="res://Assets/Raw/BGMIntro.ogg" id="6_y1apm"]
+[ext_resource type="AudioStream" uid="uid://nylgtd8hrv5" path="res://Assets/Raw/BGMLoop.ogg" id="7_3k18e"]
+[ext_resource type="Script" path="res://Assets/Scripts/BGMAudio.gd" id="8_n2kxa"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hibof"]
 resource_name = "Map Tiles"
@@ -119,5 +122,15 @@ shape = SubResource("CircleShape2D_ahel4")
 [node name="Polygon2D" type="Polygon2D" parent="Goal2"]
 polygon = PackedVector2Array(-20, -34, -28, 44, 46, 41)
 
+[node name="BGMAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_y1apm")
+volume_db = -4.685
+autoplay = true
+
+[node name="Loop" type="AudioStreamPlayer" parent="BGMAudio"]
+stream = ExtResource("7_3k18e")
+script = ExtResource("8_n2kxa")
+
 [connection signal="body_entered" from="Goal1" to="." method="_on_goal_1_body_entered"]
 [connection signal="body_entered" from="Goal2" to="." method="_on_goal_2_body_entered"]
+[connection signal="finished" from="BGMAudio" to="BGMAudio/Loop" method="_on_bgm_audio_finished"]
