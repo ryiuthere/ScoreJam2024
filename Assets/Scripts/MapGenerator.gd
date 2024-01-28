@@ -3,15 +3,13 @@ extends TileMap
 const CONNECTION_RANDOMIZER_WEIGHT := [ 0.5, 0.5, 0.5, 0.5, 0.5, 0.35, 0.35, 0.5, 0.5, 0.5, 0.5, 0.5]
 const FUEL_PICKUP := preload("res://Assets/Scenes/FuelPickup.tscn") as PackedScene
 const FUEL_PICKUP_ATLAS = Vector2i(1,4)
+const SCORE_PICKUP := preload("res://Assets/Scenes/ScorePickup.tscn") as PackedScene
+const SCORE_PICKUP_ATLAS = Vector2i(1,3)
 
 var tileset_width := 35
 var origin_initial_coords := Vector2i(-300, -tileset_width)
 var map_initial_coords := Vector2i(18, -2 * tileset_width + 1)
 var tileset_count = {}
-
-func _ready() -> void:
-	calc_tileset_count()
-	randomize_tileset()
 
 func randomize_tileset() -> void:
 	var old_pickup_nodes = get_tree().get_nodes_in_group("pickups")
@@ -23,29 +21,37 @@ func randomize_tileset() -> void:
 		for j in range(3):
 			var variant = randi() % tileset_count[tileset[i][j]]
 			draw_tile(Vector2i(i,j), tileset[i][j], variant)
-	for i in range(-20, 165):
+	for i in range(17, 124):
 		for j in range(map_initial_coords.y, map_initial_coords.y + 3 * tileset_width):
 			var type_string = ""
 			var target_position = Vector2i(i,j)
 			var tile_data = get_cell_tile_data(0, target_position)
 			if tile_data:
 				var current_target_atlas = get_cell_atlas_coords(0,target_position)
-				if (current_target_atlas == FUEL_PICKUP_ATLAS):
-					var global_position = to_global(map_to_local(target_position))
+				if (is_pickup(current_target_atlas)):
+					var pickup
+					if (current_target_atlas == FUEL_PICKUP_ATLAS):
+						pickup = FUEL_PICKUP.instantiate() as Node2D
+					elif (current_target_atlas == SCORE_PICKUP_ATLAS):
+						pickup = SCORE_PICKUP.instantiate() as Node2D
+					var position_global = to_global(map_to_local(target_position))
 					set_cell(0, target_position, -1)
-					var pickup = FUEL_PICKUP.instantiate() as Node2D
-					pickup.position = global_position
+					pickup.position = position_global
 					pickup.add_to_group("pickups")
+					call_deferred("add_child",pickup)
 				else:
 					for y in range(-1,2):
 						for x in range(-1,2):
 							var position_neighbor = Vector2i(i + x, j + y)
 							var tile_id_neighbor = get_cell_tile_data(0, position_neighbor)
-							if tile_id_neighbor and get_cell_atlas_coords(0, position_neighbor) != FUEL_PICKUP_ATLAS:
+							if tile_id_neighbor and !is_pickup(get_cell_atlas_coords(0, position_neighbor)):
 								type_string += "1"
 							else:
 								type_string += "0"
 					set_cell(0, target_position, get_cell_source_id(0, target_position), get_atlas(type_string))
+
+func is_pickup(atlas: Vector2i):
+	return atlas == FUEL_PICKUP_ATLAS or atlas == SCORE_PICKUP_ATLAS
 
 func calc_tileset_count() -> void:
 	for i in range(16):
