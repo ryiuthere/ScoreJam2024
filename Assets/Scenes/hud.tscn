@@ -1,14 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://dgmwmnwapm3fu"]
+[gd_scene load_steps=8 format=3 uid="uid://dgmwmnwapm3fu"]
 
 [ext_resource type="Texture2D" uid="uid://bk7nbacih45y3" path="res://Assets/Hud/sidebars.png" id="1_piark"]
 [ext_resource type="Script" path="res://Assets/Scripts/hud.gd" id="1_x88rf"]
 [ext_resource type="Texture2D" uid="uid://ceqh36imjhgpw" path="res://Assets/Hud/fuelbar.png" id="2_jerb6"]
 [ext_resource type="Shader" path="res://Assets/Hud/progressbaropacity.gdshader" id="2_mpxw1"]
+[ext_resource type="FontFile" uid="uid://cvqj76mf4ani5" path="res://Assets/Raw/font.ttf" id="5_siv8c"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kl38s"]
 shader = ExtResource("2_mpxw1")
 shader_parameter/fuel_amt = 1.0
 shader_parameter/opacity = 0.5
+
+[sub_resource type="LabelSettings" id="LabelSettings_cv2j2"]
+font = ExtResource("5_siv8c")
+font_size = 200
 
 [node name="Hud" type="Control"]
 layout_mode = 3
@@ -22,6 +27,7 @@ position = Vector2(-231.135, -129.625)
 scale = Vector2(0.4, 0.4)
 
 [node name="Sidebars" type="Sprite2D" parent="Window"]
+modulate = Color(1, 1, 1, 0.623529)
 position = Vector2(576, 324)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_piark")
@@ -32,3 +38,36 @@ material = SubResource("ShaderMaterial_kl38s")
 position = Vector2(135, 324)
 scale = Vector2(0.47449, 0.369254)
 texture = ExtResource("2_jerb6")
+
+[node name="TimeText" type="Label" parent="."]
+layout_mode = 2
+offset_left = -48.0
+offset_top = -118.0
+offset_right = 752.0
+offset_bottom = 85.0
+scale = Vector2(0.120002, 0.120002)
+text = "5:00"
+label_settings = SubResource("LabelSettings_cv2j2")
+horizontal_alignment = 1
+
+[node name="ScoreText" type="Label" parent="."]
+layout_mode = 2
+offset_left = -136.0
+offset_top = -113.0
+offset_right = 1264.0
+offset_bottom = 90.0
+scale = Vector2(0.0400011, 0.0400011)
+text = "250,000"
+label_settings = SubResource("LabelSettings_cv2j2")
+horizontal_alignment = 1
+
+[node name="NumDeliveriesText" type="Label" parent="."]
+layout_mode = 2
+offset_left = 79.0
+offset_top = -113.0
+offset_right = 1479.0
+offset_bottom = 90.0
+scale = Vector2(0.0400011, 0.0400011)
+text = "15"
+label_settings = SubResource("LabelSettings_cv2j2")
+horizontal_alignment = 1
