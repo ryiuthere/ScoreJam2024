@@ -2,6 +2,7 @@ extends Node
 
 var target_goal := "right"
 var score := 0
+var reset_time := 300
 var time := 300
 
 @export var delivery_score := 2500
@@ -16,12 +17,14 @@ func _ready() -> void:
 	$ScreenCover.visible = true
 	$TileMap.calc_tileset_count()
 	$TileMap.randomize_tileset()
+	time = reset_time
 
 func _input(event) -> void:
 	if (game_state == 0):
 		if (Input.is_anything_pressed()):
 			game_state = 1
 			$ScreenCover.visible = false
+			timer.start()
 	else:
 		if (Input.is_action_just_pressed("reset")):
 			score = 0
@@ -29,6 +32,8 @@ func _input(event) -> void:
 			$ScreenCover.visible = true
 			$Player.global_position = player_initial_position
 			$TileMap.randomize_tileset()
+			time = reset_time
+			timer.stop()
 
 func touch_goal(goal: String):
 	if target_goal == goal:
