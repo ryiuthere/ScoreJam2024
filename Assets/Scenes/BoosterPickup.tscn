@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://trpilhwr552d"]
+[gd_scene load_steps=8 format=3 uid="uid://cwqhhgybs8xqo"]
 
 [ext_resource type="Script" path="res://Assets/Scenes/BoosterPickup.gd" id="1_15la1"]
 
@@ -48,6 +48,7 @@ position = Vector2(0, 14.655)
 process_material = SubResource("ParticleProcessMaterial_m8w7m")
 lifetime = 0.75
 randomness = 0.31
+visibility_rect = Rect2(-25, -350, 50, 350)
 trail_enabled = true
 trail_lifetime = 0.01
 trail_sections = 2
