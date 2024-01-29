@@ -10,10 +10,11 @@ config_version=5
 
 [application]
 
-config/name="Score Jam 2024"
+config/name="Celestial Caterers"
 run/main_scene="res://Assets/Scenes/Main.tscn"
 config/features=PackedStringArray("4.1", "Mobile")
 config/icon="res://icon.svg"
+config/windows_native_icon="res://Assets/Raw/icon.png"
 
 [display]
 
