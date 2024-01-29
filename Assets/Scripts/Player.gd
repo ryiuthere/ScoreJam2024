@@ -101,10 +101,14 @@ func move(delta) -> void:
 			hover = HOVER_LENGTH
 			apply_jump(JUMP_FORCE * delta)
 		elif (can_hover and hover > 0 and fuel_amt > 0.0):
+			if (!$HoverAudio.playing):
+				$HoverAudio.play()
 			hovering = true
 			hover -= delta
 			apply_jump(HOVER_FORCE * delta)
 			fuel_amt -= FUEL_CONSUMPTION_RATE * delta
+	if (!hovering and $HoverAudio.playing):
+		$HoverAudio.stop()
 	if (dash_cooldown <= 0 and dash_axis != Vector2.ZERO and fuel_amt > MIN_DASH_FUEL_REQUIRED):
 		play_dash()
 		apply_dash(dash_axis * delta)
