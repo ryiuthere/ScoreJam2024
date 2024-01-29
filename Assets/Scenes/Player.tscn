@@ -1,8 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://dxuenr2hv1fwp"]
+[gd_scene load_steps=16 format=3 uid="uid://dxuenr2hv1fwp"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Player.gd" id="1_x2vs8"]
 [ext_resource type="Texture2D" uid="uid://dhin2nq2ra5wx" path="res://Assets/Raw/playersheet.png" id="2_gxc32"]
-[ext_resource type="Script" path="res://Assets/Scripts/DoubleTapTimer.gd" id="3_d1qb6"]
 [ext_resource type="Script" path="res://Assets/Scenes/Sprite2D.gd" id="3_m2rdv"]
 [ext_resource type="AudioStream" uid="uid://bm58w3svchjfb" path="res://Assets/Raw/jetpack.ogg" id="4_qtgcp"]
 
@@ -197,11 +196,6 @@ emitting = false
 amount = 75
 process_material = SubResource("ParticleProcessMaterial_40a31")
 speed_scale = 1.65
-
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.3
-one_shot = true
-script = ExtResource("3_d1qb6")
 
 [node name="HoverAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_qtgcp")
