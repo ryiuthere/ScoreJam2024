@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://3l3gtuv0xh4t"]
+[gd_scene load_steps=21 format=3 uid="uid://3l3gtuv0xh4t"]
 
 [ext_resource type="Texture2D" uid="uid://mfyo6f5ihp2l" path="res://Assets/Raw/groundtiles.png" id="1_alfpc"]
 [ext_resource type="Script" path="res://Assets/Scripts/game_controller.gd" id="1_avn6v"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://Assets/Scripts/BGMAudio.gd" id="8_n2kxa"]
 [ext_resource type="AudioStream" uid="uid://dm0omq1m8i78s" path="res://Assets/Raw/intro.ogg" id="9_5c3j7"]
 [ext_resource type="Script" path="res://Assets/Scripts/EndScreen.gd" id="9_mkhwg"]
+[ext_resource type="FontFile" uid="uid://cvqj76mf4ani5" path="res://Assets/Raw/font.ttf" id="9_s0ott"]
 [ext_resource type="AudioStream" uid="uid://bedkfg52wkicx" path="res://Assets/Raw/no_intro.ogg" id="10_ha64a"]
 [ext_resource type="AudioStream" uid="uid://c5ndrllqb182f" path="res://Assets/Raw/full_loop.ogg" id="12_p2v0h"]
 
@@ -94,21 +95,13 @@ size = Vector2(105, 86)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y0n4w"]
 size = Vector2(118, 57)
 
-[sub_resource type="SystemFont" id="SystemFont_8yu32"]
-font_names = PackedStringArray("Arial")
-subpixel_positioning = 0
-oversampling = 10.0
-
 [sub_resource type="LabelSettings" id="LabelSettings_ekbbi"]
-font = SubResource("SystemFont_8yu32")
-
-[sub_resource type="SystemFont" id="SystemFont_ek0kh"]
-font_names = PackedStringArray("Arial")
-oversampling = 10.0
+font = ExtResource("9_s0ott")
+font_size = 24
 
 [sub_resource type="LabelSettings" id="LabelSettings_4g8ok"]
-font = SubResource("SystemFont_ek0kh")
-font_size = 5
+font = ExtResource("9_s0ott")
+font_size = 24
 
 [node name="Main" type="Node2D" node_paths=PackedStringArray("timer")]
 script = ExtResource("1_avn6v")
@@ -175,17 +168,18 @@ offset_left = -446.0
 offset_top = -513.0
 offset_right = 344.0
 offset_bottom = 69.0
-color = Color(0, 0, 0, 0.552941)
+color = Color(0, 0, 0, 0.65098)
 
 [node name="Label" type="Label" parent="ScreenCover"]
 layout_mode = 0
-offset_left = 185.0
-offset_top = 216.0
-offset_right = 664.0
-offset_bottom = 424.0
+offset_left = 199.0
+offset_top = 220.0
+offset_right = 1543.0
+offset_bottom = 463.0
+scale = Vector2(0.322597, 0.474376)
 text = "Make as many deliveries as possible! 
 
-[WASD] to move, double tap to boost
+[WASD] to move, [Shift] to boost
 [Space] to jump, hold to fly
 [R] to restart
 
@@ -195,6 +189,7 @@ Pick up batteries for energy and coins for extra points!
 label_settings = SubResource("LabelSettings_ekbbi")
 
 [node name="EndScreen" type="ColorRect" parent="." node_paths=PackedStringArray("game_controller")]
+visible = false
 offset_left = -436.0
 offset_top = -505.0
 offset_right = -396.0
@@ -206,11 +201,11 @@ game_controller = NodePath("..")
 
 [node name="Label" type="Label" parent="EndScreen"]
 layout_mode = 0
-offset_left = 11.3408
-offset_top = 14.0117
-offset_right = 69.3408
-offset_bottom = 59.0117
-scale = Vector2(0.183962, 0.245724)
+offset_left = 10.4044
+offset_top = 15.3562
+offset_right = 634.404
+offset_bottom = 150.356
+scale = Vector2(0.0252118, 0.0402907)
 text = "Score: {}
 
 High Score: {}
