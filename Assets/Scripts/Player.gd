@@ -16,6 +16,8 @@ const MIN_DASH_FUEL_REQUIRED := (2.25/8.5) # Min fuel to dash
 const FASTFALL_FORCE := 1200 # Fastfall strength
 const FASTFALL_THRESHOLD := 250 # Maximum downwards velocity to fastfall
 
+@export var game_controller : Node2D
+
 @onready var axis := Vector2.ZERO # Input Axis
 @onready var dash_axis := Vector2.ZERO # Dash Axis
 @onready var jump_press : bool # Was jump just pressed?
@@ -31,6 +33,7 @@ const DashParticlesResource = preload("res://Assets/Scenes/DashParticles.tscn")
 
 signal ScorePickup(amount: int)
 
+const booster_sound := preload("res://Assets/Raw/booster.wav") as AudioStreamWAV
 const dash_sound := preload("res://Assets/Raw/dash.wav") as AudioStreamWAV
 const jump_sound := preload("res://Assets/Raw/jump.wav") as AudioStreamWAV
 const sfx_player := preload("res://Assets/Scenes/SFXPlayer.tscn") as PackedScene
@@ -44,6 +47,11 @@ func play_dash() -> void:
 	var sfx = sfx_player.instantiate()
 	get_tree().get_root().add_child(sfx)
 	sfx.play_sfx(dash_sound)
+	
+func play_booster() -> void:
+	var sfx = sfx_player.instantiate()
+	get_tree().get_root().add_child(sfx)
+	sfx.play_sfx(booster_sound)
 
 func _physics_process(delta) -> void:
 	move(delta)
@@ -65,6 +73,9 @@ func get_input() -> void:
 	
 	
 func move(delta) -> void:
+	if (game_controller.game_state == 0):
+		return
+	
 	get_input()
 	
 	if axis == Vector2.ZERO:
@@ -162,6 +173,7 @@ func score_pickup() -> void:
 	
 func boost_up(amount: int) -> void:
 	if can_boost:
+		play_booster()
 		velocity.y = -amount
 		can_boost = false
 		$BoostCooldown.start()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://3l3gtuv0xh4t"]
+[gd_scene load_steps=22 format=3 uid="uid://3l3gtuv0xh4t"]
 
 [ext_resource type="Texture2D" uid="uid://mfyo6f5ihp2l" path="res://Assets/Raw/groundtiles.png" id="1_alfpc"]
 [ext_resource type="Script" path="res://Assets/Scripts/game_controller.gd" id="1_avn6v"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bpi6nnx7fsaq4" path="res://Assets/Raw/house.png" id="8_bi0ih"]
 [ext_resource type="Script" path="res://Assets/Scripts/BGMAudio.gd" id="8_n2kxa"]
 [ext_resource type="AudioStream" uid="uid://dm0omq1m8i78s" path="res://Assets/Raw/intro.ogg" id="9_5c3j7"]
+[ext_resource type="Script" path="res://Assets/Scripts/EndScreen.gd" id="9_mkhwg"]
 [ext_resource type="AudioStream" uid="uid://bedkfg52wkicx" path="res://Assets/Raw/no_intro.ogg" id="10_ha64a"]
 [ext_resource type="AudioStream" uid="uid://c5ndrllqb182f" path="res://Assets/Raw/full_loop.ogg" id="12_p2v0h"]
 
@@ -100,7 +101,14 @@ oversampling = 10.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_ekbbi"]
 font = SubResource("SystemFont_8yu32")
-font_size = 20
+
+[sub_resource type="SystemFont" id="SystemFont_ek0kh"]
+font_names = PackedStringArray("Arial")
+oversampling = 10.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_4g8ok"]
+font = SubResource("SystemFont_ek0kh")
+font_size = 5
 
 [node name="Main" type="Node2D" node_paths=PackedStringArray("timer")]
 script = ExtResource("1_avn6v")
@@ -148,10 +156,11 @@ shape = SubResource("RectangleShape2D_y0n4w")
 scale = Vector2(2, 2)
 texture = ExtResource("8_bi0ih")
 
-[node name="Player" parent="." instance=ExtResource("2_uasqk")]
+[node name="Player" parent="." node_paths=PackedStringArray("game_controller") instance=ExtResource("2_uasqk")]
 position = Vector2(-40, -160)
 collision_layer = 3
 collision_mask = 3
+game_controller = NodePath("..")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(0, -50)
@@ -166,7 +175,7 @@ offset_left = -446.0
 offset_top = -513.0
 offset_right = 344.0
 offset_bottom = 69.0
-color = Color(0, 0, 0, 0.443137)
+color = Color(0, 0, 0, 0.552941)
 
 [node name="Label" type="Label" parent="ScreenCover"]
 layout_mode = 0
@@ -178,25 +187,50 @@ text = "Make as many deliveries as possible!
 
 [WASD] to move, double tap to boost
 [Space] to jump, hold to fly
+[R] to restart
 
 Pick up batteries for energy and coins for extra points!
 
-[Press any button to start]"
+[Press [Space] to start]"
 label_settings = SubResource("LabelSettings_ekbbi")
+
+[node name="EndScreen" type="ColorRect" parent="." node_paths=PackedStringArray("game_controller")]
+offset_left = -436.0
+offset_top = -505.0
+offset_right = -396.0
+offset_bottom = -465.0
+scale = Vector2(19.2226, 14.1311)
+color = Color(0, 0, 0.117647, 1)
+script = ExtResource("9_mkhwg")
+game_controller = NodePath("..")
+
+[node name="Label" type="Label" parent="EndScreen"]
+layout_mode = 0
+offset_left = 11.3408
+offset_top = 14.0117
+offset_right = 69.3408
+offset_bottom = 59.0117
+scale = Vector2(0.183962, 0.245724)
+text = "Score: {}
+
+High Score: {}
+
+Press [Space] to try again"
+label_settings = SubResource("LabelSettings_4g8ok")
 
 [node name="AudioStart" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_5c3j7")
-volume_db = -6.0
+volume_db = -12.0
 autoplay = true
 
 [node name="Section2" type="AudioStreamPlayer" parent="AudioStart"]
 stream = ExtResource("10_ha64a")
-volume_db = -6.0
+volume_db = -12.0
 script = ExtResource("8_n2kxa")
 
 [node name="FullLoop" type="AudioStreamPlayer" parent="AudioStart/Section2"]
 stream = ExtResource("12_p2v0h")
-volume_db = -6.0
+volume_db = -12.0
 
 [node name="GameTimer" type="Timer" parent="."]
 

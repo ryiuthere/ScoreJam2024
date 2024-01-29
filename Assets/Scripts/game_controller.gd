@@ -1,9 +1,10 @@
 extends Node
 
 var target_goal := "right"
+var high_score := 0
 var score := 0
-var reset_time := 180
-var time := 180
+var reset_time := 150
+var time := 150
 
 @export var delivery_score := 2500
 @export var coin_pickup_score := 100
@@ -22,28 +23,19 @@ func play_goal_sound() -> void:
 
 func _ready() -> void:
 	timer = $GameTimer
-	$ScreenCover.visible = true
 	$TileMap.calc_tileset_count()
-	$TileMap.randomize_tileset()
-	time = reset_time
+	reset()
 
 func _input(_event) -> void:
 	if (game_state == 0):
-		if (Input.is_anything_pressed()):
+		if (Input.is_action_just_pressed("jump")):
 			game_state = 1
 			$ScreenCover.visible = false
+			$EndScreen.visible = false
 			timer.start()
 	else:
 		if (Input.is_action_just_pressed("reset")):
-			score = 0
-			game_state = 0
-			$ScreenCover.visible = true
-			$Player.global_position = player_initial_position
-			$Player.velocity = Vector2.ZERO
-			$Player.refill_fuel(1)
-			$TileMap.randomize_tileset()
-			time = reset_time
-			timer.stop()
+			reset()
 
 func touch_goal(goal: String):
 	if target_goal == goal:
@@ -61,7 +53,23 @@ func _on_goal_2_body_entered(_body):
 
 func _on_game_timer_timeout(): # Called every second
 	time -= 1
+	if (time == 0):
+		reset()
+		$EndScreen.set_score(score)
+		$EndScreen.visible = true
 
 func _on_player_score_pickup(amount):
 	score += amount
-	print("Score: " + str(score))
+
+func reset() -> void:
+	high_score = score if score > high_score else high_score
+	score = 0
+	game_state = 0
+	$ScreenCover.visible = true
+	$EndScreen.visible = false
+	$Player.global_position = player_initial_position
+	$Player.velocity = Vector2.ZERO
+	$Player.refill_fuel(1)
+	$TileMap.randomize_tileset()
+	time = reset_time
+	timer.stop()
