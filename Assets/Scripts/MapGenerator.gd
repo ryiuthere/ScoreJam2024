@@ -5,6 +5,8 @@ const FUEL_PICKUP := preload("res://Assets/Scenes/FuelPickup.tscn") as PackedSce
 const FUEL_PICKUP_ATLAS = Vector2i(1,4)
 const SCORE_PICKUP := preload("res://Assets/Scenes/ScorePickup.tscn") as PackedScene
 const SCORE_PICKUP_ATLAS = Vector2i(1,3)
+const BOOSTER_PICKUP := preload("res://Assets/Scenes/BoosterPickup.tscn") as PackedScene
+const BOOSTER_PICKUP_ATLAS = Vector2i(2,4)
 
 var tileset_width := 35
 var origin_initial_coords := Vector2i(-300, -tileset_width)
@@ -34,11 +36,15 @@ func randomize_tileset() -> void:
 						pickup = FUEL_PICKUP.instantiate() as Node2D
 					elif (current_target_atlas == SCORE_PICKUP_ATLAS):
 						pickup = SCORE_PICKUP.instantiate() as Node2D
+					elif (current_target_atlas == BOOSTER_PICKUP_ATLAS):
+						pickup = BOOSTER_PICKUP.instantiate() as Node2D
 					var position_global = to_global(map_to_local(target_position))
 					set_cell(0, target_position, -1)
 					pickup.position = position_global
 					pickup.add_to_group("pickups")
 					call_deferred("add_child",pickup)
+				elif current_target_atlas.x >= 3:
+					continue
 				else:
 					for y in range(-1,2):
 						for x in range(-1,2):
@@ -51,7 +57,7 @@ func randomize_tileset() -> void:
 					set_cell(0, target_position, get_cell_source_id(0, target_position), get_atlas(type_string))
 
 func is_pickup(atlas: Vector2i):
-	return atlas == FUEL_PICKUP_ATLAS or atlas == SCORE_PICKUP_ATLAS
+	return atlas == FUEL_PICKUP_ATLAS or atlas == SCORE_PICKUP_ATLAS or atlas == BOOSTER_PICKUP_ATLAS
 
 func calc_tileset_count() -> void:
 	for i in range(16):

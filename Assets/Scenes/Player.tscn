@@ -144,3 +144,8 @@ speed_scale = 1.65
 wait_time = 0.3
 one_shot = true
 script = ExtResource("3_d1qb6")
+
+[node name="BoostCooldown" type="Timer" parent="."]
+wait_time = 0.25
+
+[connection signal="timeout" from="BoostCooldown" to="." method="_on_boost_cooldown_timeout"]
