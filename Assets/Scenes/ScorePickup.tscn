@@ -1,10 +1,49 @@
-[gd_scene load_steps=4 format=3 uid="uid://vqmuo2jh5j4p"]
+[gd_scene load_steps=7 format=3 uid="uid://vqmuo2jh5j4p"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/ScorePickup.gd" id="1_nhv5b"]
-[ext_resource type="Texture2D" uid="uid://cbbw6cjex3lgg" path="res://Assets/Raw/TempGas.png" id="2_4h4ee"]
+[ext_resource type="Texture2D" uid="uid://de33bwdlolfon" path="res://Assets/Raw/coin-Sheet.png" id="2_tt5p2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bu4qo"]
-size = Vector2(26, 26)
+size = Vector2(22, 26)
+
+[sub_resource type="Animation" id="Animation_jdm1l"]
+resource_name = "Idle"
+length = 0.116668
+loop_mode = 1
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0166667, 0.0333333, 0.05, 0.0666667, 0.0833333, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+
+[sub_resource type="Animation" id="Animation_adhhx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wtpeh"]
+_data = {
+"Idle": SubResource("Animation_jdm1l"),
+"RESET": SubResource("Animation_adhhx")
+}
 
 [node name="ScorePickup" type="Area2D"]
 scale = Vector2(0.5, 0.5)
@@ -12,11 +51,19 @@ script = ExtResource("1_nhv5b")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(1, 1)
-scale = Vector2(0.8125, 0.8125)
-texture = ExtResource("2_4h4ee")
+scale = Vector2(2, 2)
+texture = ExtResource("2_tt5p2")
+hframes = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_bu4qo")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Idle"
+speed_scale = 0.2
+libraries = {
+"": SubResource("AnimationLibrary_wtpeh")
+}
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

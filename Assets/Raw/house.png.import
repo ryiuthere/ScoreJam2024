@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cbbw6cjex3lgg"
-path="res://.godot/imported/TempGas.png-9a473a86d0a4ad745c4377ece9a1831a.ctex"
+uid="uid://bpi6nnx7fsaq4"
+path="res://.godot/imported/house.png-fcff6c5f7f85b67c5f6430ea5034433e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Raw/TempGas.png"
-dest_files=["res://.godot/imported/TempGas.png-9a473a86d0a4ad745c4377ece9a1831a.ctex"]
+source_file="res://Assets/Raw/house.png"
+dest_files=["res://.godot/imported/house.png-fcff6c5f7f85b67c5f6430ea5034433e.ctex"]
 
 [params]
 
