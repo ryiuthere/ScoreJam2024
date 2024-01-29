@@ -1,13 +1,15 @@
-[gd_scene load_steps=14 format=3 uid="uid://3l3gtuv0xh4t"]
+[gd_scene load_steps=16 format=3 uid="uid://3l3gtuv0xh4t"]
 
 [ext_resource type="Texture2D" uid="uid://mfyo6f5ihp2l" path="res://Assets/Raw/groundtiles.png" id="1_alfpc"]
 [ext_resource type="Script" path="res://Assets/Scripts/game_controller.gd" id="1_avn6v"]
-[ext_resource type="Texture2D" uid="uid://r00i78n58mk7" path="res://Assets/Raw/TestBackground.png" id="2_l8pjy"]
+[ext_resource type="Texture2D" uid="uid://bqdn6cuadffx" path="res://Assets/Raw/bg.png" id="2_432th"]
 [ext_resource type="Script" path="res://Assets/Scripts/MapGenerator.gd" id="2_lerxm"]
 [ext_resource type="PackedScene" uid="uid://dxuenr2hv1fwp" path="res://Assets/Scenes/Player.tscn" id="2_uasqk"]
 [ext_resource type="PackedScene" uid="uid://dgmwmnwapm3fu" path="res://Assets/Scenes/hud.tscn" id="4_n1k82"]
 [ext_resource type="AudioStream" uid="uid://d2x540e1pmr3j" path="res://Assets/Raw/BGMIntro.ogg" id="6_y1apm"]
 [ext_resource type="AudioStream" uid="uid://nylgtd8hrv5" path="res://Assets/Raw/BGMLoop.ogg" id="7_3k18e"]
+[ext_resource type="Texture2D" uid="uid://jlulnsi0u7ga" path="res://Assets/Raw/wcdonald.png" id="7_7c3lf"]
+[ext_resource type="Texture2D" uid="uid://bpi6nnx7fsaq4" path="res://Assets/Raw/house.png" id="8_bi0ih"]
 [ext_resource type="Script" path="res://Assets/Scripts/BGMAudio.gd" id="8_n2kxa"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hibof"]
@@ -77,11 +79,11 @@ texture_region_size = Vector2i(18, 18)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_hibof")
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_eb7el"]
-radius = 76.99
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bw8jx"]
+size = Vector2(105, 86)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ahel4"]
-radius = 76.99
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y0n4w"]
+size = Vector2(118, 57)
 
 [node name="Main" type="Node2D" node_paths=PackedStringArray("timer")]
 script = ExtResource("1_avn6v")
@@ -91,11 +93,10 @@ timer = NodePath("GameTimer")
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0.2, 0.2)
-motion_mirroring = Vector2(800, 800)
+motion_mirroring = Vector2(1080, 1080)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-scale = Vector2(2, 2)
-texture = ExtResource("2_l8pjy")
+texture = ExtResource("2_432th")
 centered = false
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -118,26 +119,30 @@ player_node = NodePath("../..")
 game_controller = NodePath("../../..")
 
 [node name="Goal1" type="Area2D" parent="."]
-position = Vector2(-186, -224)
+position = Vector2(-211, -187)
 collision_layer = 2
 collision_mask = 2
 
-[node name="Polygon2D" type="Polygon2D" parent="Goal1"]
-polygon = PackedVector2Array(-20, -34, -28, 44, 46, 41)
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Goal1"]
-shape = SubResource("CircleShape2D_eb7el")
+position = Vector2(0.5, -1)
+shape = SubResource("RectangleShape2D_bw8jx")
+
+[node name="Sprite2D" type="Sprite2D" parent="Goal1"]
+scale = Vector2(2, 2)
+texture = ExtResource("7_7c3lf")
 
 [node name="Goal2" type="Area2D" parent="."]
-position = Vector2(2431, -217)
+position = Vector2(2463, -187)
 collision_layer = 2
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Goal2"]
-shape = SubResource("CircleShape2D_ahel4")
+position = Vector2(-1, 13.5)
+shape = SubResource("RectangleShape2D_y0n4w")
 
-[node name="Polygon2D" type="Polygon2D" parent="Goal2"]
-polygon = PackedVector2Array(-20, -34, -28, 44, 46, 41)
+[node name="Sprite2D" type="Sprite2D" parent="Goal2"]
+scale = Vector2(2, 2)
+texture = ExtResource("8_bi0ih")
 
 [node name="ScreenCover" type="ColorRect" parent="."]
 offset_left = -446.0
