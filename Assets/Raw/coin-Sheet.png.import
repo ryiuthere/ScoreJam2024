@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cbbw6cjex3lgg"
-path="res://.godot/imported/TempGas.png-9a473a86d0a4ad745c4377ece9a1831a.ctex"
+uid="uid://de33bwdlolfon"
+path="res://.godot/imported/coin-Sheet.png-20e786db9134a53cb22fb25d20b7cacf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Raw/TempGas.png"
-dest_files=["res://.godot/imported/TempGas.png-9a473a86d0a4ad745c4377ece9a1831a.ctex"]
+source_file="res://Assets/Raw/coin-Sheet.png"
+dest_files=["res://.godot/imported/coin-Sheet.png-20e786db9134a53cb22fb25d20b7cacf.ctex"]
 
 [params]
 

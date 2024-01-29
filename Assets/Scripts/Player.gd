@@ -30,6 +30,20 @@ const DashParticlesResource = preload("res://Assets/Scenes/DashParticles.tscn")
 
 signal ScorePickup(amount: int)
 
+const dash_sound := preload("res://Assets/Raw/dash.wav") as AudioStreamWAV
+const jump_sound := preload("res://Assets/Raw/jump.wav") as AudioStreamWAV
+const sfx_player := preload("res://Assets/Scenes/SFXPlayer.tscn") as PackedScene
+
+func play_jump() -> void:
+	var sfx = sfx_player.instantiate()
+	get_tree().get_root().add_child(sfx)
+	sfx.play_sfx(jump_sound)
+	
+func play_dash() -> void:
+	var sfx = sfx_player.instantiate()
+	get_tree().get_root().add_child(sfx)
+	sfx.play_sfx(dash_sound)
+
 func _physics_process(delta) -> void:
 	move(delta)
 
@@ -74,6 +88,7 @@ func move(delta) -> void:
 	var hovering := false
 	if (jump_hold):
 		if (jump_press and is_on_floor()):
+			play_jump()
 			hover = HOVER_LENGTH
 			apply_jump(JUMP_FORCE * delta)
 		elif (can_hover and hover > 0 and fuel_amt > 0.0):
@@ -82,6 +97,7 @@ func move(delta) -> void:
 			apply_jump(HOVER_FORCE * delta)
 			fuel_amt -= FUEL_CONSUMPTION_RATE * delta
 	if (dash_cooldown <= 0 and dash_axis != Vector2.ZERO and fuel_amt > MIN_DASH_FUEL_REQUIRED):
+		play_dash()
 		apply_dash(dash_axis * delta)
 		dash_cooldown = DASH_COOLDOWN
 		fuel_amt -= DASH_COST
