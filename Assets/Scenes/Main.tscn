@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://3l3gtuv0xh4t"]
+[gd_scene load_steps=17 format=3 uid="uid://3l3gtuv0xh4t"]
 
 [ext_resource type="Texture2D" uid="uid://mfyo6f5ihp2l" path="res://Assets/Raw/groundtiles.png" id="1_alfpc"]
 [ext_resource type="Script" path="res://Assets/Scripts/game_controller.gd" id="1_avn6v"]
@@ -6,11 +6,12 @@
 [ext_resource type="Script" path="res://Assets/Scripts/MapGenerator.gd" id="2_lerxm"]
 [ext_resource type="PackedScene" uid="uid://dxuenr2hv1fwp" path="res://Assets/Scenes/Player.tscn" id="2_uasqk"]
 [ext_resource type="PackedScene" uid="uid://dgmwmnwapm3fu" path="res://Assets/Scenes/hud.tscn" id="4_n1k82"]
-[ext_resource type="AudioStream" uid="uid://d2x540e1pmr3j" path="res://Assets/Raw/BGMIntro.ogg" id="6_y1apm"]
-[ext_resource type="AudioStream" uid="uid://nylgtd8hrv5" path="res://Assets/Raw/BGMLoop.ogg" id="7_3k18e"]
 [ext_resource type="Texture2D" uid="uid://jlulnsi0u7ga" path="res://Assets/Raw/wcdonald.png" id="7_7c3lf"]
 [ext_resource type="Texture2D" uid="uid://bpi6nnx7fsaq4" path="res://Assets/Raw/house.png" id="8_bi0ih"]
 [ext_resource type="Script" path="res://Assets/Scripts/BGMAudio.gd" id="8_n2kxa"]
+[ext_resource type="AudioStream" uid="uid://dm0omq1m8i78s" path="res://Assets/Raw/intro.ogg" id="9_5c3j7"]
+[ext_resource type="AudioStream" uid="uid://bedkfg52wkicx" path="res://Assets/Raw/no_intro.ogg" id="10_ha64a"]
+[ext_resource type="AudioStream" uid="uid://c5ndrllqb182f" path="res://Assets/Raw/full_loop.ogg" id="12_p2v0h"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hibof"]
 resource_name = "Map Tiles"
@@ -161,20 +162,25 @@ text = "Press any button to start"
 fit_content = true
 autowrap_mode = 0
 
-[node name="BGMAudio" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_y1apm")
+[node name="AudioStart" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_5c3j7")
 volume_db = -6.0
 autoplay = true
 
-[node name="Loop" type="AudioStreamPlayer" parent="BGMAudio"]
-stream = ExtResource("7_3k18e")
+[node name="Section2" type="AudioStreamPlayer" parent="AudioStart"]
+stream = ExtResource("10_ha64a")
 volume_db = -6.0
 script = ExtResource("8_n2kxa")
+
+[node name="FullLoop" type="AudioStreamPlayer" parent="AudioStart/Section2"]
+stream = ExtResource("12_p2v0h")
+volume_db = -6.0
 
 [node name="GameTimer" type="Timer" parent="."]
 
 [connection signal="ScorePickup" from="Player" to="." method="_on_player_score_pickup"]
 [connection signal="body_entered" from="Goal1" to="." method="_on_goal_1_body_entered"]
 [connection signal="body_entered" from="Goal2" to="." method="_on_goal_2_body_entered"]
-[connection signal="finished" from="BGMAudio" to="BGMAudio/Loop" method="_on_bgm_audio_finished"]
+[connection signal="finished" from="AudioStart" to="AudioStart/Section2" method="_on_bgm_audio_finished"]
+[connection signal="finished" from="AudioStart/Section2" to="AudioStart/Section2" method="_on_finished"]
 [connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]
