@@ -25,6 +25,7 @@ const FASTFALL_THRESHOLD := 250 # Maximum downwards velocity to fastfall
 @onready var dash_cooldown : float # Cooldown between dashes
 @onready var fuel_amt := 1.0 # Current fuel amount
 @onready var fastfall : bool # Is the player holding down?
+@onready var can_boost := true # Can the player be affected by booster pads?
 
 const DashParticlesResource = preload("res://Assets/Scenes/DashParticles.tscn")
 
@@ -158,3 +159,12 @@ func refill_fuel(amount: float) -> void:
 
 func score_pickup() -> void:
 	ScorePickup.emit(500)
+	
+func boost_up(amount: int) -> void:
+	if can_boost:
+		velocity.y = -amount
+		can_boost = false
+		$BoostCooldown.start()
+
+func _on_boost_cooldown_timeout() -> void:
+	can_boost = true

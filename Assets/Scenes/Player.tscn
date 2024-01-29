@@ -206,3 +206,8 @@ script = ExtResource("3_d1qb6")
 [node name="HoverAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_qtgcp")
 volume_db = -6.0
+
+[node name="BoostCooldown" type="Timer" parent="."]
+wait_time = 0.25
+
+[connection signal="timeout" from="BoostCooldown" to="." method="_on_boost_cooldown_timeout"]

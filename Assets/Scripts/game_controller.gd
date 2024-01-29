@@ -61,8 +61,6 @@ func _on_goal_2_body_entered(_body):
 
 func _on_game_timer_timeout(): # Called every second
 	time -= 1
-	if time <= 0:
-		print("debug game over") # TODO: remove
 
 func _on_player_score_pickup(amount):
 	score += amount
