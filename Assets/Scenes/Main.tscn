@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://3l3gtuv0xh4t"]
+[gd_scene load_steps=19 format=3 uid="uid://3l3gtuv0xh4t"]
 
 [ext_resource type="Texture2D" uid="uid://mfyo6f5ihp2l" path="res://Assets/Raw/groundtiles.png" id="1_alfpc"]
 [ext_resource type="Script" path="res://Assets/Scripts/game_controller.gd" id="1_avn6v"]
@@ -86,6 +86,15 @@ size = Vector2(105, 86)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y0n4w"]
 size = Vector2(118, 57)
 
+[sub_resource type="SystemFont" id="SystemFont_8yu32"]
+font_names = PackedStringArray("Arial")
+subpixel_positioning = 0
+oversampling = 10.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_ekbbi"]
+font = SubResource("SystemFont_8yu32")
+font_size = 20
+
 [node name="Main" type="Node2D" node_paths=PackedStringArray("timer")]
 script = ExtResource("1_avn6v")
 timer = NodePath("GameTimer")
@@ -107,7 +116,7 @@ layer_0/tile_data = PackedInt32Array(65518, 65536, 1, 65519, 65536, 1, 65520, 65
 script = ExtResource("2_lerxm")
 
 [node name="Player" parent="." instance=ExtResource("2_uasqk")]
-position = Vector2(-41, -177)
+position = Vector2(-40, -160)
 collision_layer = 3
 collision_mask = 3
 
@@ -152,15 +161,14 @@ offset_right = 344.0
 offset_bottom = 69.0
 color = Color(0, 0, 0, 0.443137)
 
-[node name="RichTextLabel" type="RichTextLabel" parent="ScreenCover"]
+[node name="Label" type="Label" parent="ScreenCover"]
 layout_mode = 0
 offset_left = 313.0
 offset_top = 216.0
 offset_right = 505.0
 offset_bottom = 256.0
 text = "Press any button to start"
-fit_content = true
-autowrap_mode = 0
+label_settings = SubResource("LabelSettings_ekbbi")
 
 [node name="AudioStart" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_5c3j7")

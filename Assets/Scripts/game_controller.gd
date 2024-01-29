@@ -12,6 +12,14 @@ var time := 180
 @onready var game_state := 0 # 0 = Pre-game (paused), 1 = game in progress
 @onready var player_initial_position = $Player.global_position
 
+const goal_sound := preload("res://Assets/Raw/goal.wav") as AudioStreamWAV
+const sfx_player := preload("res://Assets/Scenes/SFXPlayer.tscn") as PackedScene
+
+func play_goal_sound() -> void:
+	var sfx = sfx_player.instantiate()
+	get_tree().get_root().add_child(sfx)
+	sfx.play_sfx(goal_sound)
+
 func _ready() -> void:
 	timer = $GameTimer
 	$ScreenCover.visible = true
@@ -31,12 +39,15 @@ func _input(_event) -> void:
 			game_state = 0
 			$ScreenCover.visible = true
 			$Player.global_position = player_initial_position
+			$Player.velocity = Vector2.ZERO
+			$Player.refill_fuel(1)
 			$TileMap.randomize_tileset()
 			time = reset_time
 			timer.stop()
 
 func touch_goal(goal: String):
 	if target_goal == goal:
+		play_goal_sound()
 		target_goal = "right" if goal == "left" else "left"
 		score += delivery_score
 		$TileMap.randomize_tileset() # This causes a lagspike, is it possible to run this concurrently during gameplay?
