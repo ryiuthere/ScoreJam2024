@@ -1,6 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://cwqhhgybs8xqo"]
+[gd_scene load_steps=8 format=3 uid="uid://trpilhwr552d"]
 
-[ext_resource type="Script" path="res://Assets/Scenes/BoosterPickup.gd" id="1_15la1"]
+[ext_resource type="Script" path="res://Assets/Scripts/BoosterPickup.gd" id="1_42ja3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bu4qo"]
 size = Vector2(26, 26)
@@ -37,7 +37,7 @@ hue_variation_max = 0.04
 
 [node name="BoosterPickup" type="Area2D"]
 scale = Vector2(0.5, 0.5)
-script = ExtResource("1_15la1")
+script = ExtResource("1_42ja3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 1)
@@ -48,9 +48,8 @@ position = Vector2(0, 14.655)
 process_material = SubResource("ParticleProcessMaterial_m8w7m")
 lifetime = 0.75
 randomness = 0.31
-visibility_rect = Rect2(-25, -350, 50, 350)
 trail_enabled = true
-trail_lifetime = 0.01
+trail_lifetime = 0.02
 trail_sections = 2
 trail_section_subdivisions = 1
 

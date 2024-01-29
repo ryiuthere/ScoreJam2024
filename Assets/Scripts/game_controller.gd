@@ -51,7 +51,7 @@ func touch_goal(goal: String):
 		target_goal = "right" if goal == "left" else "left"
 		score += delivery_score
 		$TileMap.randomize_tileset() # This causes a lagspike, is it possible to run this concurrently during gameplay?
-		$Player.refill_fuel(1/3.4)
+		$Player.refill_fuel(1.0)
 
 func _on_goal_1_body_entered(_body):
 	touch_goal("left")
