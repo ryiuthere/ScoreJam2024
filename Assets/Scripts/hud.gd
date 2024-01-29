@@ -3,6 +3,7 @@ extends Control
 var fuelbar : Sprite2D
 var timetext : Label
 var scoretext : Label
+var highscoretext : Label
 
 @export var player_node : CharacterBody2D
 @export var game_controller : Node2D
@@ -11,6 +12,7 @@ func _ready():
 	fuelbar = %Fuelbar
 	timetext = $TimeText
 	scoretext = $ScoreText
+	highscoretext = $HighScoreText
 	set_fuel(1.0)
 	
 func _process(_delta):
@@ -23,6 +25,7 @@ func set_fuel(amt):
 func update_labels():
 	timetext.text = parsed_time(game_controller.time)
 	scoretext.text = str(game_controller.score)
+	highscoretext.text = "High Score:\n" + str(game_controller.high_score)
 
 func parsed_time(seconds):
 	return "%d:%02d" % [seconds / 60, seconds % 60]

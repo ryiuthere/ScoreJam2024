@@ -62,8 +62,7 @@ scale = Vector2(0.0400011, 0.0400011)
 label_settings = SubResource("LabelSettings_cv2j2")
 horizontal_alignment = 1
 
-[node name="NumDeliveriesText" type="Label" parent="."]
-visible = false
+[node name="HighScoreText" type="Label" parent="."]
 layout_mode = 2
 offset_left = 79.0
 offset_top = -113.0
