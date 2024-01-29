@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dxuenr2hv1fwp"]
+[gd_scene load_steps=21 format=3 uid="uid://dxuenr2hv1fwp"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Player.gd" id="1_x2vs8"]
 [ext_resource type="Texture2D" uid="uid://dhin2nq2ra5wx" path="res://Assets/Raw/playersheet.png" id="2_gxc32"]
@@ -153,6 +153,20 @@ _data = {
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bpknv"]
 radius = 9.0
 
+[sub_resource type="Gradient" id="Gradient_klpie"]
+offsets = PackedFloat32Array(0, 0.0444444, 0.0962963, 0.155556, 0.251852, 0.385185, 0.77037, 0.888889, 1)
+colors = PackedColorArray(1, 1, 1, 0, 0.701961, 1, 1, 0.768627, 0, 0.790245, 0.926581, 1, 0.431131, 0.452881, 0.999994, 1, 1, 0.224589, 0.480939, 1, 1, 0.223529, 0.223529, 0.960784, 0.854902, 0.321569, 0, 0.796078, 0.792157, 0.568627, 0, 0.690196, 1, 0.913725, 0.121569, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_imoo4"]
+gradient = SubResource("Gradient_klpie")
+
+[sub_resource type="Curve" id="Curve_7qori"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.873494, 0.757895), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_6thku"]
+curve = SubResource("Curve_7qori")
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_40a31"]
 particle_flag_disable_z = true
 direction = Vector3(0, 1, 0)
@@ -162,11 +176,12 @@ initial_velocity_min = 31.58
 initial_velocity_max = 85.01
 orbit_velocity_min = 0.0
 orbit_velocity_max = 0.0
-linear_accel_min = 35.79
-linear_accel_max = 35.79
+tangential_accel_max = 92.64
 angle_min = -114.3
 angle_max = 82.7
-color = Color(1, 0.815686, 0, 1)
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_6thku")
+color_ramp = SubResource("GradientTexture1D_imoo4")
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_x2vs8")
