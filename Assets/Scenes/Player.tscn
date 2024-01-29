@@ -193,7 +193,6 @@ script = ExtResource("3_m2rdv")
 shape = SubResource("CapsuleShape2D_bpknv")
 
 [node name="HoverParticles" type="GPUParticles2D" parent="."]
-emitting = false
 amount = 75
 process_material = SubResource("ParticleProcessMaterial_40a31")
 speed_scale = 1.65
