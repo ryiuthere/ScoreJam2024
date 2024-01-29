@@ -163,11 +163,18 @@ color = Color(0, 0, 0, 0.443137)
 
 [node name="Label" type="Label" parent="ScreenCover"]
 layout_mode = 0
-offset_left = 313.0
+offset_left = 185.0
 offset_top = 216.0
-offset_right = 505.0
-offset_bottom = 256.0
-text = "Press any button to start"
+offset_right = 664.0
+offset_bottom = 424.0
+text = "Make as many deliveries as possible! 
+
+[WASD] to move, double tap to boost
+[Space] to jump, hold to fly
+
+Pick up batteries for energy and coins for extra points!
+
+[Press any button to start]"
 label_settings = SubResource("LabelSettings_ekbbi")
 
 [node name="AudioStart" type="AudioStreamPlayer" parent="."]
