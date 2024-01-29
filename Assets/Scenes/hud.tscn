@@ -23,8 +23,8 @@ offset_bottom = 40.0
 script = ExtResource("1_x88rf")
 
 [node name="Window" type="Node2D" parent="."]
-position = Vector2(-231.135, -129.625)
-scale = Vector2(0.4, 0.4)
+position = Vector2(-289.525, -146)
+scale = Vector2(0.5, 0.5)
 
 [node name="Sidebars" type="Sprite2D" parent="Window"]
 modulate = Color(1, 1, 1, 0.623529)
