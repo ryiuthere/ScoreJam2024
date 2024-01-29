@@ -2,8 +2,8 @@ extends Node
 
 var target_goal := "right"
 var score := 0
-var reset_time := 300
-var time := 300
+var reset_time := 180
+var time := 180
 
 @export var delivery_score := 2500
 @export var coin_pickup_score := 100
@@ -19,7 +19,7 @@ func _ready() -> void:
 	$TileMap.randomize_tileset()
 	time = reset_time
 
-func _input(event) -> void:
+func _input(_event) -> void:
 	if (game_state == 0):
 		if (Input.is_anything_pressed()):
 			game_state = 1
