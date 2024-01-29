@@ -6,7 +6,7 @@ var score := 0
 var reset_time := 150
 var time := 150
 
-@export var delivery_score := 2500
+@export var delivery_score := 7500
 @export var coin_pickup_score := 100
 @export var timer : Timer
 	
@@ -24,18 +24,20 @@ func play_goal_sound() -> void:
 func _ready() -> void:
 	timer = $GameTimer
 	$TileMap.calc_tileset_count()
-	reset()
+	reset(false)
 
 func _input(_event) -> void:
 	if (game_state == 0):
-		if (Input.is_action_just_pressed("jump")):
+		if ($EndScreen.visible == false and Input.is_action_just_pressed("jump")):
 			game_state = 1
 			$ScreenCover.visible = false
 			$EndScreen.visible = false
 			timer.start()
+		elif (Input.is_action_just_pressed("click")):
+			$EndScreen.visible = false
 	else:
 		if (Input.is_action_just_pressed("reset")):
-			reset()
+			reset(false)
 
 func touch_goal(goal: String):
 	if target_goal == goal:
@@ -54,19 +56,19 @@ func _on_goal_2_body_entered(_body):
 func _on_game_timer_timeout(): # Called every second
 	time -= 1
 	if (time == 0):
-		reset()
 		$EndScreen.set_score(score)
-		$EndScreen.visible = true
+		reset(true)
 
 func _on_player_score_pickup(amount):
 	score += amount
 
-func reset() -> void:
+func reset(show_end_screen: bool) -> void:
 	high_score = score if score > high_score else high_score
+	target_goal = "right"
 	score = 0
 	game_state = 0
 	$ScreenCover.visible = true
-	$EndScreen.visible = false
+	$EndScreen.visible = show_end_screen
 	$Player.global_position = player_initial_position
 	$Player.velocity = Vector2.ZERO
 	$Player.refill_fuel(1)
