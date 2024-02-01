@@ -9,7 +9,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kl38s"]
 shader = ExtResource("2_mpxw1")
 shader_parameter/fuel_amt = 1.0
-shader_parameter/opacity = 0.5
+shader_parameter/opacity = 0.35
 
 [sub_resource type="LabelSettings" id="LabelSettings_cv2j2"]
 font = ExtResource("5_siv8c")
@@ -23,11 +23,11 @@ offset_bottom = 40.0
 script = ExtResource("1_x88rf")
 
 [node name="Window" type="Node2D" parent="."]
-position = Vector2(-289.525, -146)
+position = Vector2(-289.525, -161.285)
 scale = Vector2(0.5, 0.5)
 
 [node name="Sidebars" type="Sprite2D" parent="Window"]
-modulate = Color(1, 1, 1, 0.623529)
+modulate = Color(1, 1, 1, 0.368627)
 position = Vector2(576, 324)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_piark")
@@ -39,14 +39,24 @@ position = Vector2(135, 324)
 scale = Vector2(0.47449, 0.369254)
 texture = ExtResource("2_jerb6")
 
+[node name="BoostTweenTimer" type="Timer" parent="Window/Fuelbar"]
+unique_name_in_owner = true
+wait_time = 0.8
+one_shot = true
+
+[node name="FuelpickupTweenTimer" type="Timer" parent="Window/Fuelbar"]
+unique_name_in_owner = true
+wait_time = 0.15
+one_shot = true
+
 [node name="TimeText" type="Label" parent="."]
 modulate = Color(1, 1, 1, 0.823529)
 layout_mode = 2
-offset_left = -48.0
-offset_top = -118.0
-offset_right = 752.0
-offset_bottom = 85.0
-scale = Vector2(0.120002, 0.120002)
+offset_left = -77.0
+offset_top = -138.0
+offset_right = 723.0
+offset_bottom = 65.0
+scale = Vector2(0.200002, 0.200002)
 text = "5:00"
 label_settings = SubResource("LabelSettings_cv2j2")
 horizontal_alignment = 1
@@ -54,21 +64,26 @@ horizontal_alignment = 1
 [node name="ScoreText" type="Label" parent="."]
 modulate = Color(1, 1, 1, 0.823529)
 layout_mode = 2
-offset_left = -28.0
+offset_left = -39.0
 offset_top = -92.0
-offset_right = 1372.0
+offset_right = 1361.0
 offset_bottom = 111.0
-scale = Vector2(0.0400011, 0.0400011)
+scale = Vector2(0.055, 0.055)
+text = "18000"
 label_settings = SubResource("LabelSettings_cv2j2")
 horizontal_alignment = 1
 
 [node name="HighScoreText" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0.792157)
 layout_mode = 2
-offset_left = 79.0
-offset_top = -113.0
-offset_right = 1479.0
-offset_bottom = 90.0
-scale = Vector2(0.0400011, 0.0400011)
-text = "15"
+offset_left = -280.0
+offset_top = 140.0
+offset_right = 2120.0
+offset_bottom = 546.0
+scale = Vector2(0.065, 0.065)
+text = "Highscore: 0"
 label_settings = SubResource("LabelSettings_cv2j2")
 horizontal_alignment = 1
+
+[connection signal="timeout" from="Window/Fuelbar/BoostTweenTimer" to="." method="_on_boost_tween_timer_timeout"]
+[connection signal="timeout" from="Window/Fuelbar/FuelpickupTweenTimer" to="." method="_on_fuelpickup_tween_timer_timeout"]

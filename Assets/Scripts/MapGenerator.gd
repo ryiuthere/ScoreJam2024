@@ -209,6 +209,7 @@ func get_randomized_tileset() -> Array:
 		tiles[2][1] = "%s1%s%s" % [connections[4],connections[9],connections[6]]
 		tiles[2][2] = "%s00%s" % [connections[9], connections[11]]
 		valid_map = path_exists(tiles)
+
 	return tiles
 
 func path_exists(tiles: Array) -> bool:
