@@ -29,6 +29,8 @@ const FASTFALL_THRESHOLD := 250 # Maximum downwards velocity to fastfall
 @onready var fastfall : bool # Is the player holding down?
 @onready var can_boost := true # Can the player be affected by booster pads?
 
+@onready var Hud = $Camera2D/Hud
+
 const DashParticlesResource = preload("res://Assets/Scenes/DashParticles.tscn")
 
 signal ScorePickup(amount: int)
@@ -157,11 +159,18 @@ func apply_fastfall(amount: float) -> void:
 		velocity.y += amount
 
 func apply_dash(dash_vector: Vector2) -> void:
+	if Hud:
+		Hud.start_dash_animation()
 	velocity = Vector2(dash_vector.x * DASH_FORCE.x, dash_vector.y * DASH_FORCE.y)
 	self.add_child(DashParticlesResource.instantiate())
 
+func fuel_pickup_to_hud():
+	if Hud:
+		Hud.start_fuelpickup_animation()
+
 func refill_fuel(amount: float) -> void:
 	fuel_amt = clamp(fuel_amt + amount, 0, 1)
+	fuel_pickup_to_hud()
 
 func score_pickup() -> void:
 	ScorePickup.emit(500)

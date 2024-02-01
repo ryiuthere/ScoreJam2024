@@ -1,8 +1,9 @@
-[gd_scene load_steps=20 format=3 uid="uid://dxuenr2hv1fwp"]
+[gd_scene load_steps=22 format=3 uid="uid://dxuenr2hv1fwp"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Player.gd" id="1_x2vs8"]
 [ext_resource type="Texture2D" uid="uid://dhin2nq2ra5wx" path="res://Assets/Raw/playersheet.png" id="2_gxc32"]
-[ext_resource type="Script" path="res://Assets/Scenes/Sprite2D.gd" id="3_m2rdv"]
+[ext_resource type="Shader" path="res://Assets/Raw/squish.gdshader" id="2_wdfjh"]
+[ext_resource type="Script" path="res://Assets/Scripts/Sprite2D.gd" id="4_n3wo6"]
 [ext_resource type="AudioStream" uid="uid://bm58w3svchjfb" path="res://Assets/Raw/jetpack.ogg" id="4_qtgcp"]
 
 [sub_resource type="Animation" id="Animation_xb6hi"]
@@ -149,6 +150,12 @@ _data = {
 "right": SubResource("Animation_xcr52")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_saj5m"]
+shader = ExtResource("2_wdfjh")
+shader_parameter/deform = Vector2(0, 0)
+shader_parameter/horiz_deform_scale = 0.5
+shader_parameter/cross_factor = 0.4
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bpknv"]
 radius = 9.0
 
@@ -197,11 +204,12 @@ libraries = {
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
+material = SubResource("ShaderMaterial_saj5m")
 scale = Vector2(1.2, 1.2)
 texture = ExtResource("2_gxc32")
 offset = Vector2(-4, -2)
 hframes = 4
-script = ExtResource("3_m2rdv")
+script = ExtResource("4_n3wo6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_bpknv")
