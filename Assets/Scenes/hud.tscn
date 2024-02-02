@@ -3,11 +3,11 @@
 [ext_resource type="Texture2D" uid="uid://bk7nbacih45y3" path="res://Assets/Hud/sidebars.png" id="1_piark"]
 [ext_resource type="Script" path="res://Assets/Scripts/hud.gd" id="1_x88rf"]
 [ext_resource type="Texture2D" uid="uid://ceqh36imjhgpw" path="res://Assets/Hud/fuelbar.png" id="2_jerb6"]
-[ext_resource type="Shader" path="res://Assets/Hud/progressbaropacity.gdshader" id="2_mpxw1"]
+[ext_resource type="Shader" path="res://Assets/Shaders/progressbaropacity.gdshader" id="3_h5pxt"]
 [ext_resource type="FontFile" uid="uid://cvqj76mf4ani5" path="res://Assets/Raw/font.ttf" id="5_siv8c"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kl38s"]
-shader = ExtResource("2_mpxw1")
+shader = ExtResource("3_h5pxt")
 shader_parameter/fuel_amt = 1.0
 shader_parameter/opacity = 0.35
 

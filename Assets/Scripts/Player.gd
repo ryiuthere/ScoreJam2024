@@ -28,8 +28,8 @@ const FASTFALL_THRESHOLD := 250 # Maximum downwards velocity to fastfall
 @onready var fuel_amt := 1.0 # Current fuel amount
 @onready var fastfall : bool # Is the player holding down?
 @onready var can_boost := true # Can the player be affected by booster pads?
-
 @onready var Hud = $Camera2D/Hud
+@onready var last_dash_axis := Vector2.ZERO
 
 const DashParticlesResource = preload("res://Assets/Scenes/DashParticles.tscn")
 
@@ -163,6 +163,8 @@ func apply_dash(dash_vector: Vector2) -> void:
 		Hud.start_dash_animation()
 	velocity = Vector2(dash_vector.x * DASH_FORCE.x, dash_vector.y * DASH_FORCE.y)
 	self.add_child(DashParticlesResource.instantiate())
+	last_dash_axis = Vector2(abs(dash_axis.x), abs(dash_axis.y))
+	deform_player()
 
 func fuel_pickup_to_hud():
 	if Hud:
@@ -184,3 +186,26 @@ func boost_up(amount: int) -> void:
 
 func _on_boost_cooldown_timeout() -> void:
 	can_boost = true
+	
+func deform_player() -> void:
+	"""In future games where we'll use a state machine for the player, it would be fairly simple to have
+	these parameters be functions of acceleration. That way, dashing, boosting, or colliding with something
+	at a high speed would cause a proportionate squish effect, and we don't have to worry about making 
+	this feel consistent since it'll be done automatically."""
+	var deform_tween = get_tree().create_tween()
+	var is_diagonal = abs(last_dash_axis.x - last_dash_axis.y) <= 0.01
+	if is_diagonal:
+		last_dash_axis.y = 0.0
+		last_dash_axis.x = 0.5
+	else:
+		last_dash_axis.y *= 1.15
+	$Sprite2D.material.set_shader_parameter("scale_squish", is_diagonal)
+	deform_tween.tween_method(set_deform, 0.5, 0.0, 0.15) 
+
+func set_deform(def_scale: float) -> void:
+	def_scale = mapped_to_deform_curve(def_scale)
+	$Sprite2D.material.set_shader_parameter("deform_x", last_dash_axis.x * def_scale)
+	$Sprite2D.material.set_shader_parameter("deform_y", last_dash_axis.y * def_scale)
+
+func mapped_to_deform_curve(value: float):
+	return value

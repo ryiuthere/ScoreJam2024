@@ -1,8 +1,8 @@
-[gd_scene load_steps=22 format=3 uid="uid://dxuenr2hv1fwp"]
+[gd_scene load_steps=22 format=3 uid="uid://dmu7pimruhbwe"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Player.gd" id="1_x2vs8"]
 [ext_resource type="Texture2D" uid="uid://dhin2nq2ra5wx" path="res://Assets/Raw/playersheet.png" id="2_gxc32"]
-[ext_resource type="Shader" path="res://Assets/Raw/squish.gdshader" id="2_wdfjh"]
+[ext_resource type="Shader" path="res://Assets/Shaders/scale.gdshader" id="2_h2w7m"]
 [ext_resource type="Script" path="res://Assets/Scripts/Sprite2D.gd" id="4_n3wo6"]
 [ext_resource type="AudioStream" uid="uid://bm58w3svchjfb" path="res://Assets/Raw/jetpack.ogg" id="4_qtgcp"]
 
@@ -151,10 +151,12 @@ _data = {
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_saj5m"]
-shader = ExtResource("2_wdfjh")
-shader_parameter/deform = Vector2(0, 0)
-shader_parameter/horiz_deform_scale = 0.5
-shader_parameter/cross_factor = 0.4
+shader = ExtResource("2_h2w7m")
+shader_parameter/deform_x = 0.0
+shader_parameter/deform_y = 0.0
+shader_parameter/squish_factor = 0.5
+shader_parameter/component_floor = 0.25
+shader_parameter/scale_squish = false
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bpknv"]
 radius = 9.0
