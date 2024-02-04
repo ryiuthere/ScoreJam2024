@@ -1,9 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://cltgvj1tiklm6"]
+[gd_scene load_steps=2 format=3 uid="uid://cltgvj1tiklm6"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/scenecontroller.gd" id="1_640j3"]
-[ext_resource type="PackedScene" uid="uid://3l3gtuv0xh4t" path="res://Assets/Scenes/Gameplay.tscn" id="1_hff11"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_640j3")
 
-[node name="Gameplay" parent="." instance=ExtResource("1_hff11")]
+[node name="LoadingTimer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="ScreenCover" type="ColorRect" parent="."]
+z_index = 1
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 0)
+
+[connection signal="timeout" from="LoadingTimer" to="." method="_on_loading_timer_timeout"]

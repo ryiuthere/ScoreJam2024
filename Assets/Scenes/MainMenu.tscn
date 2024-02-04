@@ -1,6 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://cyorto8lufnue"]
+[gd_scene load_steps=16 format=3 uid="uid://cyorto8lufnue"]
 
 [ext_resource type="FontFile" uid="uid://cvqj76mf4ani5" path="res://Assets/Raw/font.ttf" id="1_2mejv"]
+[ext_resource type="Script" path="res://Assets/Scripts/MainMenu.gd" id="1_mxiwd"]
 [ext_resource type="Texture2D" uid="uid://cjb3kt36mo8dx" path="res://Assets/Raw/MainMenu/title_coverart_upscale.png" id="2_r1c5o"]
 [ext_resource type="Texture2D" uid="uid://8rcvt1kfla4w" path="res://Assets/Raw/MainMenu/title_title_upscale.png" id="3_bemca"]
 [ext_resource type="Script" path="res://Assets/Scripts/backgroundparallax.gd" id="4_2jk7u"]
@@ -9,6 +10,7 @@
 [sub_resource type="LabelSettings" id="LabelSettings_vcr0h"]
 font = ExtResource("1_2mejv")
 font_size = 119
+font_color = Color(1, 1, 1, 0.909804)
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_uyc5k"]
@@ -83,6 +85,7 @@ offset_right = 128.0
 offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_mxiwd")
 
 [node name="HomeMenu" type="Control" parent="."]
 anchors_preset = 0
