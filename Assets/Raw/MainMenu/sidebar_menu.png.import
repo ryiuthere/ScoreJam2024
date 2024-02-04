@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ceqh36imjhgpw"
-path="res://.godot/imported/fuelbar.png-6849aa1ba9ddeed24817ca488e65a55e.ctex"
+uid="uid://2rw0hdpakqwy"
+path="res://.godot/imported/sidebar_menu.png-4269e2b6ee6b7eb2e447ff85678547e4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Hud/fuelbar.png"
-dest_files=["res://.godot/imported/fuelbar.png-6849aa1ba9ddeed24817ca488e65a55e.ctex"]
+source_file="res://Assets/Raw/MainMenu/sidebar_menu.png"
+dest_files=["res://.godot/imported/sidebar_menu.png-4269e2b6ee6b7eb2e447ff85678547e4.ctex"]
 
 [params]
 
