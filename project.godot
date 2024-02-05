@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Celestial Catering"
-run/main_scene="res://Assets/Scenes/main.tscn"
+run/main_scene="res://Assets/Scenes/Main.tscn"
 config/features=PackedStringArray("4.1", "Mobile")
 run/max_fps=60
 boot_splash/bg_color=Color(0.0980392, 0.0745098, 0.12549, 1)

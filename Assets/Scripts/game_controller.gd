@@ -18,11 +18,17 @@ signal return_to_main
 
 const goal_sound := preload("res://Assets/Raw/goal.wav") as AudioStreamWAV
 const sfx_player := preload("res://Assets/Scenes/SFXPlayer.tscn") as PackedScene
+const pickup_sound := preload("res://Assets/Raw/pickupGas.wav") as AudioStreamWAV
 
 func play_goal_sound() -> void:
 	var sfx = sfx_player.instantiate()
 	get_tree().get_root().add_child(sfx)
 	sfx.play_sfx(goal_sound)
+	
+func play_pickup_sound() -> void:
+	var sfx = sfx_player.instantiate()
+	get_tree().get_root().add_child(sfx)
+	sfx.play_sfx(pickup_sound)
 
 func _ready() -> void:
 	timer = $GameTimer
@@ -44,6 +50,7 @@ func _input(event) -> void:
 		if (event.is_action_pressed("reset")):
 			reset(false)
 	if event.is_action_pressed("escape") and not transitioning_to_main:
+		play_pickup_sound()
 		transitioning_to_main = true
 		var tween = create_tween()
 		tween.tween_interval(0.35)
