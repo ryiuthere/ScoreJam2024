@@ -33,6 +33,7 @@ func _ready() -> void:
 func _input(event) -> void:
 	if (game_state == 0):
 		if ($EndScreen.visible == false and Input.is_action_just_pressed("jump")):
+			$Player.velocity = Vector2.ZERO
 			game_state = 1
 			$ScreenCover.visible = false
 			$EndScreen.visible = false

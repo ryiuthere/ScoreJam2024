@@ -12,7 +12,7 @@ const LABEL_HIGHLIGHT := Color(1.0, 1.0, 1.0, 0.85)
 var menu_functions := []
 
 @onready var selections = $HomeMenu/ContentMargin/Selections
-var menu_selections := []
+@onready var menu_selections := []
 var menu_current_index : int
 
 const jump_sound := preload("res://Assets/Raw/jump.wav") as AudioStreamWAV
@@ -28,6 +28,10 @@ func _ready():
 		menu_selections.append(text_label)
 	if menu_selections:
 		menu_current_index = 0
+		for text in menu_selections:
+			text.label_settings.font_color = LABEL_COLOR
+		menu_selections[0].label_settings.font_color = LABEL_HIGHLIGHT
+	
 	set_text_home()
 	$IntroMusic.play()
 	request_ready()
@@ -47,6 +51,8 @@ func change_menu_index(amount: int) -> void:
 	menu_selections[menu_current_index].label_settings.font_color = LABEL_COLOR
 	while true:
 		menu_current_index = (menu_current_index + amount) % len(menu_selections)
+		if menu_current_index < 0:
+			menu_current_index += len(menu_selections)
 		if menu_selections[menu_current_index].text != "":
 			break
 	menu_selections[menu_current_index].label_settings.font_color = LABEL_HIGHLIGHT

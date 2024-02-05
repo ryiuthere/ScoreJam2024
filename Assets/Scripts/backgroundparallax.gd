@@ -9,6 +9,7 @@ func _ready() -> void:
 	angle = rng.randf_range(0, 2*PI)
 	speed = rng.randf_range(20.0, 40.0)
 	velocity_vector = Vector2(cos(angle), sin(angle)) * speed
+	request_ready()
 	
 
 func _process(delta) -> void:
