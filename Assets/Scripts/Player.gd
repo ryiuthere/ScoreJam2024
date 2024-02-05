@@ -199,13 +199,13 @@ func deform_player() -> void:
 		last_dash_axis.x = 0.5
 	else:
 		last_dash_axis.y *= 1.15
-	$Sprite2D.material.set_shader_parameter("scale_squish", is_diagonal)
+	%Sprite2D.material.set_shader_parameter("scale_squish", is_diagonal)
 	deform_tween.tween_method(set_deform, 0.5, 0.0, 0.15) 
 
 func set_deform(def_scale: float) -> void:
 	def_scale = mapped_to_deform_curve(def_scale)
-	$Sprite2D.material.set_shader_parameter("deform_x", last_dash_axis.x * def_scale)
-	$Sprite2D.material.set_shader_parameter("deform_y", last_dash_axis.y * def_scale)
+	%Sprite2D.material.set_shader_parameter("deform_x", last_dash_axis.x * def_scale)
+	%Sprite2D.material.set_shader_parameter("deform_y", last_dash_axis.y * def_scale)
 
 func mapped_to_deform_curve(value: float):
 	return value

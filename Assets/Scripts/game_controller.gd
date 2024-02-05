@@ -6,6 +6,8 @@ var score := 0
 var reset_time := 150
 var time := 150
 
+signal return_to_main
+
 @export var delivery_score := 7500
 @export var coin_pickup_score := 100
 @export var timer : Timer
@@ -26,18 +28,20 @@ func _ready() -> void:
 	$TileMap.calc_tileset_count()
 	reset(false)
 
-func _input(_event) -> void:
+func _input(event) -> void:
 	if (game_state == 0):
 		if ($EndScreen.visible == false and Input.is_action_just_pressed("jump")):
 			game_state = 1
 			$ScreenCover.visible = false
 			$EndScreen.visible = false
 			timer.start()
-		elif (Input.is_action_just_pressed("click")):
+		elif (event.is_action_pressed("click")):
 			$EndScreen.visible = false
 	else:
-		if (Input.is_action_just_pressed("reset")):
+		if (event.is_action_pressed("reset")):
 			reset(false)
+	if event.is_action_pressed("escape"):
+		return_to_main.emit()
 
 func touch_goal(goal: String):
 	if target_goal == goal:

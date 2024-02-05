@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cyorto8lufnue"]
+[gd_scene load_steps=20 format=3 uid="uid://cyorto8lufnue"]
 
 [ext_resource type="FontFile" uid="uid://cvqj76mf4ani5" path="res://Assets/Raw/font.ttf" id="1_2mejv"]
 [ext_resource type="Script" path="res://Assets/Scripts/MainMenu.gd" id="1_mxiwd"]
@@ -6,17 +6,13 @@
 [ext_resource type="Texture2D" uid="uid://8rcvt1kfla4w" path="res://Assets/Raw/MainMenu/title_title_upscale.png" id="3_bemca"]
 [ext_resource type="Script" path="res://Assets/Scripts/backgroundparallax.gd" id="4_2jk7u"]
 [ext_resource type="Texture2D" uid="uid://bkhauopu2mb2s" path="res://Assets/Raw/MainMenu/bg_hires.png" id="5_ipj0r"]
+[ext_resource type="AudioStream" uid="uid://dpm4ltts6lgdx" path="res://mainmenu_intro.ogg" id="7_jvff2"]
+[ext_resource type="AudioStream" uid="uid://b0uucyjmp0mpe" path="res://mainmenu_loop.ogg" id="8_6buai"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vcr0h"]
 font = ExtResource("1_2mejv")
 font_size = 119
 font_color = Color(1, 1, 1, 0.909804)
-outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_uyc5k"]
-font = ExtResource("1_2mejv")
-font_size = 119
-font_color = Color(1, 1, 1, 0.113725)
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_qm0q5"]
@@ -25,6 +21,24 @@ font_size = 119
 font_color = Color(1, 1, 1, 0.113725)
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_uyc5k"]
+font = ExtResource("1_2mejv")
+font_size = 119
+font_color = Color(1, 1, 1, 0.113725)
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_vfysk"]
+font = ExtResource("1_2mejv")
+font_size = 119
+font_color = Color(1, 1, 1, 0.113725)
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_e4im5"]
+font = ExtResource("1_2mejv")
+font_size = 119
+font_color = Color(1, 1, 1, 0.113725)
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Gradient" id="Gradient_lvu3x"]
 offsets = PackedFloat32Array(0, 0.214815, 0.392593, 0.977778)
@@ -97,8 +111,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 3520.0
-offset_bottom = 1980.0
+offset_left = -22.035
+offset_top = -25.68
+offset_right = 3497.97
+offset_bottom = 1954.32
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.24, 0.24)
@@ -109,21 +125,30 @@ theme_override_constants/margin_top = 995
 layout_mode = 2
 theme_override_constants/separation = 92
 
-[node name="StartText" type="Label" parent="HomeMenu/ContentMargin/Selections"]
+[node name="Pos1" type="Label" parent="HomeMenu/ContentMargin/Selections"]
 layout_mode = 2
 text = "Start"
 label_settings = SubResource("LabelSettings_vcr0h")
 
-[node name="OptionsText" type="Label" parent="HomeMenu/ContentMargin/Selections"]
+[node name="Pos2" type="Label" parent="HomeMenu/ContentMargin/Selections"]
+layout_mode = 2
+text = "Set Name"
+label_settings = SubResource("LabelSettings_qm0q5")
+
+[node name="Pos3" type="Label" parent="HomeMenu/ContentMargin/Selections"]
 layout_mode = 2
 text = "Options
 "
 label_settings = SubResource("LabelSettings_uyc5k")
 
-[node name="LeaderboardText" type="Label" parent="HomeMenu/ContentMargin/Selections"]
+[node name="Pos4" type="Label" parent="HomeMenu/ContentMargin/Selections"]
 layout_mode = 2
-text = "Leaderboard"
-label_settings = SubResource("LabelSettings_qm0q5")
+text = "Leaderboards"
+label_settings = SubResource("LabelSettings_vfysk")
+
+[node name="Pos5" type="Label" parent="HomeMenu/ContentMargin/Selections"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_e4im5")
 
 [node name="Coverart" type="Sprite2D" parent="HomeMenu"]
 position = Vector2(576, 324)
@@ -169,3 +194,15 @@ trail_enabled = true
 trail_lifetime = 0.12
 trail_sections = 4
 trail_section_subdivisions = 1
+
+[node name="IntroMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_jvff2")
+volume_db = -10.0
+bus = &"Music"
+
+[node name="LoopMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_6buai")
+volume_db = -10.0
+bus = &"Music"
+
+[connection signal="finished" from="IntroMusic" to="." method="_on_music_finished"]

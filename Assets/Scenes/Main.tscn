@@ -11,8 +11,11 @@ one_shot = true
 
 [node name="ScreenCover" type="ColorRect" parent="."]
 z_index = 1
-offset_right = 1152.0
-offset_bottom = 648.0
+offset_left = -32665.0
+offset_top = -24150.0
+offset_right = -31513.0
+offset_bottom = -23502.0
+scale = Vector2(240.926, 206.201)
 color = Color(0, 0, 0, 0)
 
 [connection signal="timeout" from="LoadingTimer" to="." method="_on_loading_timer_timeout"]

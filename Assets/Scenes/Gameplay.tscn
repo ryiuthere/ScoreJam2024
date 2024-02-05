@@ -215,17 +215,20 @@ label_settings = SubResource("LabelSettings_4g8ok")
 
 [node name="AudioStart" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_wo71y")
-volume_db = -12.0
+volume_db = -16.685
 autoplay = true
+bus = &"Music"
 
 [node name="Section2" type="AudioStreamPlayer" parent="AudioStart"]
 stream = ExtResource("12_64qf1")
 volume_db = -12.0
+bus = &"Music"
 script = ExtResource("13_mwsm2")
 
 [node name="FullLoop" type="AudioStreamPlayer" parent="AudioStart/Section2"]
 stream = ExtResource("14_dkyil")
 volume_db = -12.0
+bus = &"Music"
 
 [node name="GameTimer" type="Timer" parent="."]
 
