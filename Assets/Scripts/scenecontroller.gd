@@ -20,19 +20,17 @@ func switch_to_scene(target: Node) -> void:
 	current_scene = target
 	
 func play_unloading_animation() -> void:
-	print("uloading")
 	loading_screen_timer.start()
 	var tween = create_tween() 
-	tween.tween_property(loading_screen_cover, "color", Color(0.0, 0.0, 0.0, 1.0), (loading_screen_timer.wait_time/2))
+	tween.tween_property(loading_screen_cover, "color", Color(0.0, 0.0, 0.0, 1.0), (loading_screen_timer.wait_time/1.8))
 	
 func play_loading_animation() -> void:
 	var tween = create_tween() 
-	tween.tween_property(loading_screen_cover, "color", Color(0.0, 0.0, 0.0, 0.0), (loading_screen_timer.wait_time))
+	tween.tween_property(loading_screen_cover, "color", Color(0.0, 0.0, 0.0, 0.0), (loading_screen_timer.wait_time/1.5))
 
 func _on_loading_timer_timeout():
 	if current_scene == mainmenu_scene:
 		switch_to_scene(gameplay_scene)
-		loading_screen_cover.position = Vector2(-446, -513)
 	elif current_scene == gameplay_scene:
 		switch_to_scene(mainmenu_scene)
 

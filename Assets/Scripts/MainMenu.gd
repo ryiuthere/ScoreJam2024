@@ -1,14 +1,14 @@
 extends Control
 
 
+signal start_game 
+@onready var transitioning := false
+
 # enum OPTIONS_MENU {BACK, CONTROLS, MUSIC_VOLUME, SFX_VOLUME}
 # enum LEADERBOARDS_MENU {BACK, FIRST, SECOND, THIRD, YOU}
 
 const LABEL_COLOR := Color(1.0, 1.0, 1.0, 0.11)
 const LABEL_HIGHLIGHT := Color(1.0, 1.0, 1.0, 0.85)
-
-signal start_game 
-
 var menu_functions := []
 
 @onready var selections = $HomeMenu/ContentMargin/Selections
@@ -30,9 +30,7 @@ func _ready():
 		menu_current_index = 0
 	set_text_home()
 	$IntroMusic.play()
-
-func start(): 
-	start_game.emit()
+	request_ready()
 
 func _input(event):
 	if event.is_action_pressed("down"):
@@ -55,6 +53,11 @@ func change_menu_index(amount: int) -> void:
 
 func _on_music_finished():
 	$LoopMusic.play()
+	
+func start(): 
+	if not transitioning:
+		transitioning = true
+		start_game.emit()
 
 func set_text_home():
 	menu_functions = [[start], [], [], [], []]

@@ -30,6 +30,7 @@ const FASTFALL_THRESHOLD := 250 # Maximum downwards velocity to fastfall
 @onready var can_boost := true # Can the player be affected by booster pads?
 @onready var Hud = $Camera2D/Hud
 @onready var last_dash_axis := Vector2.ZERO
+@onready var hovering := false
 
 const DashParticlesResource = preload("res://Assets/Scenes/DashParticles.tscn")
 
@@ -103,7 +104,7 @@ func move(delta) -> void:
 		can_hover = can_hover || !jump_hold
 	else:
 		can_hover = false
-	var hovering := false
+	hovering = false
 	if (jump_hold):
 		if (jump_press and is_on_floor()):
 			play_jump()
@@ -203,9 +204,15 @@ func deform_player() -> void:
 	deform_tween.tween_method(set_deform, 0.5, 0.0, 0.15) 
 
 func set_deform(def_scale: float) -> void:
-	def_scale = mapped_to_deform_curve(def_scale)
 	%Sprite2D.material.set_shader_parameter("deform_x", last_dash_axis.x * def_scale)
 	%Sprite2D.material.set_shader_parameter("deform_y", last_dash_axis.y * def_scale)
 
-func mapped_to_deform_curve(value: float):
-	return value
+func reset_states():
+	$HoverAudio.stop()
+	$HoverParticles.emitting = false
+	velocity = Vector2.ZERO
+	$FacingAnimator.play("right")
+	$SpriteAnimator.play("walk")
+	can_boost = true
+	dash_cooldown = 0
+	

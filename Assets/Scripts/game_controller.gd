@@ -14,6 +14,7 @@ signal return_to_main
 	
 @onready var game_state := 0 # 0 = Pre-game (paused), 1 = game in progress
 @onready var player_initial_position = $Player.global_position
+@onready var transitioning_to_main := false
 
 const goal_sound := preload("res://Assets/Raw/goal.wav") as AudioStreamWAV
 const sfx_player := preload("res://Assets/Scenes/SFXPlayer.tscn") as PackedScene
@@ -27,6 +28,7 @@ func _ready() -> void:
 	timer = $GameTimer
 	$TileMap.calc_tileset_count()
 	reset(false)
+	request_ready()
 
 func _input(event) -> void:
 	if (game_state == 0):
@@ -40,7 +42,14 @@ func _input(event) -> void:
 	else:
 		if (event.is_action_pressed("reset")):
 			reset(false)
-	if event.is_action_pressed("escape"):
+	if event.is_action_pressed("escape") and not transitioning_to_main:
+		transitioning_to_main = true
+		var tween = create_tween()
+		tween.tween_interval(0.35)
+		tween.tween_callback(reset)
+		$AudioStart.stop()
+		$AudioStart/Section2.stop()
+		$AudioStart/Section2/FullLoop.stop()
 		return_to_main.emit()
 
 func touch_goal(goal: String):
@@ -66,15 +75,15 @@ func _on_game_timer_timeout(): # Called every second
 func _on_player_score_pickup(amount):
 	score += amount
 
-func reset(show_end_screen: bool) -> void:
+func reset(show_end_screen = false) -> void:
 	high_score = score if score > high_score else high_score
 	target_goal = "right"
 	score = 0
 	game_state = 0
+	$Player.reset_states()
 	$ScreenCover.visible = true
 	$EndScreen.visible = show_end_screen
 	$Player.global_position = player_initial_position
-	$Player.velocity = Vector2.ZERO
 	$Player.refill_fuel(1)
 	$TileMap.randomize_tileset()
 	time = reset_time
