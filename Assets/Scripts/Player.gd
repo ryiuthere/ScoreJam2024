@@ -28,6 +28,9 @@ const FASTFALL_THRESHOLD := 250 # Maximum downwards velocity to fastfall
 @onready var fuel_amt := 1.0 # Current fuel amount
 @onready var fastfall : bool # Is the player holding down?
 @onready var can_boost := true # Can the player be affected by booster pads?
+@onready var Hud = $Camera2D/Hud
+@onready var last_dash_axis := Vector2.ZERO
+@onready var hovering := false
 
 const DashParticlesResource = preload("res://Assets/Scenes/DashParticles.tscn")
 
@@ -101,7 +104,7 @@ func move(delta) -> void:
 		can_hover = can_hover || !jump_hold
 	else:
 		can_hover = false
-	var hovering := false
+	hovering = false
 	if (jump_hold):
 		if (jump_press and is_on_floor()):
 			play_jump()
@@ -157,11 +160,20 @@ func apply_fastfall(amount: float) -> void:
 		velocity.y += amount
 
 func apply_dash(dash_vector: Vector2) -> void:
+	if Hud:
+		Hud.start_dash_animation()
 	velocity = Vector2(dash_vector.x * DASH_FORCE.x, dash_vector.y * DASH_FORCE.y)
 	self.add_child(DashParticlesResource.instantiate())
+	last_dash_axis = Vector2(abs(dash_axis.x), abs(dash_axis.y))
+	deform_player()
+
+func fuel_pickup_to_hud():
+	if Hud:
+		Hud.start_fuelpickup_animation()
 
 func refill_fuel(amount: float) -> void:
 	fuel_amt = clamp(fuel_amt + amount, 0, 1)
+	fuel_pickup_to_hud()
 
 func score_pickup() -> void:
 	ScorePickup.emit(500)
@@ -175,3 +187,32 @@ func boost_up(amount: int) -> void:
 
 func _on_boost_cooldown_timeout() -> void:
 	can_boost = true
+	
+func deform_player() -> void:
+	"""In future games where we'll use a state machine for the player, it would be fairly simple to have
+	these parameters be functions of acceleration. That way, dashing, boosting, or colliding with something
+	at a high speed would cause a proportionate squish effect, and we don't have to worry about making 
+	this feel consistent since it'll be done automatically."""
+	var deform_tween = get_tree().create_tween()
+	var is_diagonal = abs(last_dash_axis.x - last_dash_axis.y) <= 0.01
+	if is_diagonal:
+		last_dash_axis.y = 0.0
+		last_dash_axis.x = 0.5
+	else:
+		last_dash_axis.y *= 1.15
+	%Sprite2D.material.set_shader_parameter("scale_squish", is_diagonal)
+	deform_tween.tween_method(set_deform, 0.5, 0.0, 0.15) 
+
+func set_deform(def_scale: float) -> void:
+	%Sprite2D.material.set_shader_parameter("deform_x", last_dash_axis.x * def_scale)
+	%Sprite2D.material.set_shader_parameter("deform_y", last_dash_axis.y * def_scale)
+
+func reset_states():
+	$HoverAudio.stop()
+	$HoverParticles.emitting = false
+	velocity = Vector2.ZERO
+	$FacingAnimator.play("right")
+	$SpriteAnimator.play("walk")
+	can_boost = true
+	dash_cooldown = 0
+	

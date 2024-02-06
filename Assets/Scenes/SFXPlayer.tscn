@@ -1,9 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://du52corjp05h7"]
+[gd_scene load_steps=2 format=3 uid="uid://doxmrkf7c227y"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/SFXPlayer.gd" id="1_rc87w"]
 
 [node name="SFXPlayer" type="AudioStreamPlayer"]
-volume_db = -5.0
+volume_db = -11.0
+bus = &"SFX"
 script = ExtResource("1_rc87w")
 
 [node name="Timer" type="Timer" parent="."]

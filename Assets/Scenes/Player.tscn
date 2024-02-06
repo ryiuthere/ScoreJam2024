@@ -1,8 +1,9 @@
-[gd_scene load_steps=20 format=3 uid="uid://dxuenr2hv1fwp"]
+[gd_scene load_steps=22 format=3 uid="uid://dmu7pimruhbwe"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Player.gd" id="1_x2vs8"]
 [ext_resource type="Texture2D" uid="uid://dhin2nq2ra5wx" path="res://Assets/Raw/playersheet.png" id="2_gxc32"]
-[ext_resource type="Script" path="res://Assets/Scenes/Sprite2D.gd" id="3_m2rdv"]
+[ext_resource type="Shader" path="res://Assets/Shaders/scale.gdshader" id="2_h2w7m"]
+[ext_resource type="Script" path="res://Assets/Scripts/Sprite2D.gd" id="4_n3wo6"]
 [ext_resource type="AudioStream" uid="uid://bm58w3svchjfb" path="res://Assets/Raw/jetpack.ogg" id="4_qtgcp"]
 
 [sub_resource type="Animation" id="Animation_xb6hi"]
@@ -149,6 +150,14 @@ _data = {
 "right": SubResource("Animation_xcr52")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_saj5m"]
+shader = ExtResource("2_h2w7m")
+shader_parameter/deform_x = 0.0
+shader_parameter/deform_y = 0.0
+shader_parameter/squish_factor = 0.5
+shader_parameter/component_floor = 0.25
+shader_parameter/scale_squish = false
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bpknv"]
 radius = 9.0
 
@@ -197,11 +206,13 @@ libraries = {
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
+material = SubResource("ShaderMaterial_saj5m")
 scale = Vector2(1.2, 1.2)
 texture = ExtResource("2_gxc32")
-offset = Vector2(-4, -2)
+offset = Vector2(4, -2)
+flip_h = true
 hframes = 4
-script = ExtResource("3_m2rdv")
+script = ExtResource("4_n3wo6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_bpknv")
@@ -214,7 +225,8 @@ speed_scale = 1.65
 
 [node name="HoverAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_qtgcp")
-volume_db = -6.0
+volume_db = -12.0
+bus = &"SFX"
 
 [node name="BoostCooldown" type="Timer" parent="."]
 wait_time = 0.25
