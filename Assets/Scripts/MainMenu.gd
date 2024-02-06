@@ -11,8 +11,12 @@ signal start_game
 @onready var setting_name := false
 var player_name : String
 
-const LABEL_COLOR := Color(1.0, 1.0, 1.0, 0.11)
-const LABEL_HIGHLIGHT := Color(0.68, 1.0, 0.96, 0.85)
+const LABEL_COLOR := Color(1.0, 1.0, 1.0, 0.15)
+
+const LABEL_HIGHLIGHT_COLORS := [Color(0.89, 0.47, 0.47, 0.85), Color(0.68, 1.0, 0.96, 0.85), Color(0.89, 0.64, 0.94, 0.85), Color(0.73, 0.86, 0.38, 0.85)]
+const SPECIAL_COLOR_LOL := Color(1.0, 0.96, 0.45, 0.85)
+var LABEL_HIGHLIGHT : Color
+var last_highlight_index : int
 
 var menu_functions := []
 var menu_properties := []
@@ -38,6 +42,15 @@ func play_jump() -> void:
 	sfx.play_sfx(jump_sound)
 
 func _ready():
+	var rng = RandomNumberGenerator.new()
+	var choice = rng.randi_range(0, len(LABEL_HIGHLIGHT_COLORS)-1)
+	if choice == last_highlight_index:
+		choice = (choice + 1)%len(LABEL_HIGHLIGHT_COLORS)
+	last_highlight_index = choice
+	LABEL_HIGHLIGHT = LABEL_HIGHLIGHT_COLORS[choice]
+	
+	if rng.randi_range(0, 49) == 49:
+		LABEL_HIGHLIGHT = SPECIAL_COLOR_LOL
 	for text_label in selections.get_children():
 		menu_selections.append(text_label)
 	if menu_selections:
@@ -63,6 +76,7 @@ func _input(event):
 				player_name = ""
 			play_pickup()
 			setting_name = false
+			set_text_home()
 			$SetNameScreen.visible = false
 		elif event is InputEventKey and event.keycode >= 65 and event.keycode <= 90 and not event.echo and event.pressed:
 			if len(player_name) < 3:
@@ -166,16 +180,27 @@ func set_text_home():
 	menu_functions = [[start], [set_player_name], [set_text_options, reset_pos, reset_label_colors], [], []]
 	menu_properties = [[], [], [], [], []]
 	menu_selections[0].text = "Start"
-	menu_selections[1].text = "Set Name"
+	if player_name:
+		menu_selections[1].text = "Name - [%s]" % player_name
+	else:
+		menu_selections[1].text = "Set Name"
 	menu_selections[2].text = "Options"
 	menu_selections[3].text = "Leaderboards"
 	menu_selections[4].text = ""
 	
 func set_text_options():
+	var sfx_padding_len = 3-len(str(sfx_volume))
+	var mus_padding_len = 3-len(str(music_volume))
+	var sfx_padding = ""
+	var mus_padding = ""
+	for i in range(sfx_padding_len):
+		sfx_padding += " "
+	for i in range(mus_padding_len):
+		mus_padding += " "
 	menu_functions = [[set_text_home, reset_pos, reset_label_colors], [], [], [], []]
 	menu_properties = [[], [], [music_volume], [sfx_volume], []]
 	menu_selections[0].text = "Back"
 	menu_selections[1].text = "Controls"
-	menu_selections[2].text = "Music - ‹%s›" % music_volume
-	menu_selections[3].text = "SFX - ‹%s›" % sfx_volume
+	menu_selections[2].text = "Music - %s‹%s›" % [mus_padding, music_volume]
+	menu_selections[3].text = "SFX   - %s‹%s›" % [sfx_padding, sfx_volume]
 	menu_selections[4].text = ""

@@ -13,7 +13,7 @@ func _ready() -> void:
 	
 func _process(delta) -> void:
 	offset += velocity_vector * delta
-	var r = 1080 * 2
+	var r = 1080*2
 	if offset.x >= r:
 		offset.x -= r
 	elif offset.x <= -r:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cyorto8lufnue"]
+[gd_scene load_steps=21 format=3 uid="uid://cyorto8lufnue"]
 
 [ext_resource type="FontFile" uid="uid://cvqj76mf4ani5" path="res://Assets/Raw/font.ttf" id="1_2mejv"]
 [ext_resource type="Script" path="res://Assets/Scripts/MainMenu.gd" id="1_mxiwd"]
@@ -96,19 +96,6 @@ font_size = 119
 font_color = Color(1, 1, 1, 0.909804)
 outline_color = Color(0, 0, 0, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_srnwa"]
-font = ExtResource("1_2mejv")
-font_size = 119
-font_color = Color(1, 1, 1, 0.909804)
-outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_nqol7"]
-font = ExtResource("1_2mejv")
-font_size = 119
-font_color = Color(1, 1, 1, 0.909804)
-outline_size = 4
-outline_color = Color(1, 1, 1, 0.662745)
-
 [node name="MainMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -119,7 +106,6 @@ offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_mxiwd")
-metadata/_edit_lock_ = true
 
 [node name="HomeMenu" type="Control" parent="."]
 anchors_preset = 0
@@ -243,23 +229,5 @@ scale = Vector2(0.286113, 0.286113)
 text = "Enter a name:"
 label_settings = SubResource("LabelSettings_jv1ac")
 horizontal_alignment = 1
-
-[node name="Return" type="Label" parent="SetNameScreen"]
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 1914.0
-offset_bottom = 502.0
-scale = Vector2(0.166254, 0.164887)
-text = "[ESC]"
-label_settings = SubResource("LabelSettings_srnwa")
-
-[node name="ReturnSymbol" type="Label" parent="SetNameScreen"]
-offset_left = 110.0
-offset_top = -5.0
-offset_right = 2014.0
-offset_bottom = 487.0
-scale = Vector2(0.286113, 0.286113)
-text = "⏎"
-label_settings = SubResource("LabelSettings_nqol7")
 
 [connection signal="finished" from="IntroMusic" to="." method="_on_music_finished"]
