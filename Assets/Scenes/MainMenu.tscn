@@ -245,6 +245,7 @@ label_settings = SubResource("LabelSettings_jv1ac")
 horizontal_alignment = 1
 
 [node name="Return" type="Label" parent="SetNameScreen"]
+layout_mode = 0
 offset_left = 10.0
 offset_top = 10.0
 offset_right = 1914.0
@@ -254,6 +255,7 @@ text = "[ESC]"
 label_settings = SubResource("LabelSettings_srnwa")
 
 [node name="ReturnSymbol" type="Label" parent="SetNameScreen"]
+layout_mode = 0
 offset_left = 110.0
 offset_top = -5.0
 offset_right = 2014.0

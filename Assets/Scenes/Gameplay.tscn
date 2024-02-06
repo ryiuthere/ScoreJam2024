@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://3l3gtuv0xh4t"]
+[gd_scene load_steps=21 format=3 uid="uid://3l3gtuv0xh4t"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/game_controller.gd" id="1_axd1r"]
 [ext_resource type="Texture2D" uid="uid://bqdn6cuadffx" path="res://Assets/Raw/bg.png" id="2_nmyle"]
@@ -102,12 +102,6 @@ font_size = 24
 [sub_resource type="LabelSettings" id="LabelSettings_4g8ok"]
 font = ExtResource("9_cb8s5")
 font_size = 24
-
-[sub_resource type="Environment" id="Environment_vuskn"]
-background_mode = 3
-glow_blend_mode = 0
-glow_hdr_threshold = 0.91
-adjustment_enabled = true
 
 [node name="Gameplay" type="Node2D" node_paths=PackedStringArray("timer")]
 script = ExtResource("1_axd1r")
@@ -237,9 +231,6 @@ volume_db = -12.0
 bus = &"Music"
 
 [node name="GameTimer" type="Timer" parent="."]
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_vuskn")
 
 [connection signal="body_entered" from="Goal1" to="." method="_on_goal_1_body_entered"]
 [connection signal="body_entered" from="Goal2" to="." method="_on_goal_2_body_entered"]

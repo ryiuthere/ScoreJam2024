@@ -20,6 +20,8 @@ const goal_sound := preload("res://Assets/Raw/goal.wav") as AudioStreamWAV
 const sfx_player := preload("res://Assets/Scenes/SFXPlayer.tscn") as PackedScene
 const pickup_sound := preload("res://Assets/Raw/pickupGas.wav") as AudioStreamWAV
 
+const delivery_particles = preload("res://Assets/Scenes/delivery_particles.tscn") as PackedScene
+
 func play_goal_sound() -> void:
 	var sfx = sfx_player.instantiate()
 	get_tree().get_root().add_child(sfx)
@@ -62,6 +64,10 @@ func _input(event) -> void:
 
 func touch_goal(goal: String):
 	if target_goal == goal:
+		if goal == "left":
+			$Goal1.add_child(delivery_particles.instantiate())
+		else:
+			$Goal2.add_child(delivery_particles.instantiate())
 		play_goal_sound()
 		target_goal = "right" if goal == "left" else "left"
 		score += delivery_score
