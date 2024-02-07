@@ -46,7 +46,7 @@ func _input(event) -> void:
 			$ScreenCover.visible = false
 			$EndScreen.visible = false
 			timer.start()
-		elif (event.is_action_pressed("click")):
+		elif (event.is_action_pressed("enter")):
 			$EndScreen.visible = false
 	else:
 		if (event.is_action_pressed("reset")):
@@ -64,7 +64,12 @@ func _input(event) -> void:
 
 func touch_goal(goal: String):
 	if target_goal == goal:
+		$Player/DirectionArrow.make_delivery()
 		$Player.add_child(delivery_particles.instantiate())
+		if goal == "left":
+			$Player/DirectionArrow.goal_position = %Goal2.position
+		else:
+			$Player/DirectionArrow.goal_position = %Goal1.position
 		play_goal_sound()
 		target_goal = "right" if goal == "left" else "left"
 		score += delivery_score

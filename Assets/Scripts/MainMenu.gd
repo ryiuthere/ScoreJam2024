@@ -7,6 +7,8 @@ signal start_game
 @onready var is_adjustable_selected := false
 @onready var music_volume : int
 @onready var sfx_volume : int
+var fullscreen := false
+var initial_loading_for_volume_options := true
 
 @onready var setting_name := false
 var player_name : String
@@ -58,10 +60,11 @@ func _ready():
 		for text in menu_selections:
 			text.label_settings.font_color = LABEL_COLOR
 		menu_selections[0].label_settings.font_color = LABEL_HIGHLIGHT
-	if not music_volume:
+	
+	if initial_loading_for_volume_options:
 		music_volume = 100
-	if not sfx_volume:
 		sfx_volume = 100
+		initial_loading_for_volume_options = false
 	
 	set_text_home()
 	$IntroMusic.play()
@@ -177,7 +180,7 @@ func set_player_name():
 		$SetNameScreen/SetNameText.text = "Enter a name:\n\n___"
 
 func set_text_home():
-	menu_functions = [[start], [set_player_name], [set_text_options, reset_pos, reset_label_colors], [], []]
+	menu_functions = [[start], [set_player_name], [set_text_options, reset_pos, reset_label_colors], [exit_game], []]
 	menu_properties = [[], [], [], [], []]
 	menu_selections[0].text = "Start"
 	if player_name:
@@ -185,7 +188,7 @@ func set_text_home():
 	else:
 		menu_selections[1].text = "Set Name"
 	menu_selections[2].text = "Options"
-	menu_selections[3].text = "Leaderboards"
+	menu_selections[3].text = "Exit"
 	menu_selections[4].text = ""
 	
 func set_text_options():
@@ -197,10 +200,24 @@ func set_text_options():
 		sfx_padding += " "
 	for i in range(mus_padding_len):
 		mus_padding += " "
-	menu_functions = [[set_text_home, reset_pos, reset_label_colors], [], [], [], []]
+	menu_functions = [[set_text_home, reset_pos, reset_label_colors], [change_screen_mode, set_text_options], [], [], []]
 	menu_properties = [[], [], [music_volume], [sfx_volume], []]
 	menu_selections[0].text = "Back"
-	menu_selections[1].text = "Controls"
+	if fullscreen:
+		menu_selections[1].text = "Exit Fullscreen"
+	else:
+		menu_selections[1].text = "Go Fullscreen"
 	menu_selections[2].text = "Music - %s‹%s›" % [mus_padding, music_volume]
 	menu_selections[3].text = "SFX   - %s‹%s›" % [sfx_padding, sfx_volume]
 	menu_selections[4].text = ""
+
+func change_screen_mode():
+	if fullscreen:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		fullscreen = false
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+		fullscreen = true
+
+func exit_game():
+	get_tree().quit()

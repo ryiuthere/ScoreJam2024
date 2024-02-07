@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://3l3gtuv0xh4t"]
+[gd_scene load_steps=23 format=3 uid="uid://3l3gtuv0xh4t"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/game_controller.gd" id="1_axd1r"]
 [ext_resource type="Texture2D" uid="uid://bqdn6cuadffx" path="res://Assets/Raw/bg.png" id="2_nmyle"]
@@ -9,7 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://dmu7pimruhbwe" path="res://Assets/Scenes/Player.tscn" id="7_3l3kl"]
 [ext_resource type="PackedScene" uid="uid://dgmwmnwapm3fu" path="res://Assets/Scenes/hud.tscn" id="8_w5caj"]
 [ext_resource type="FontFile" uid="uid://cvqj76mf4ani5" path="res://Assets/Raw/font.ttf" id="9_cb8s5"]
+[ext_resource type="Texture2D" uid="uid://byc35mtf0mvip" path="res://Assets/Raw/direction_arrow.png" id="9_ufigq"]
 [ext_resource type="Script" path="res://Assets/Scripts/EndScreen.gd" id="10_3a0t7"]
+[ext_resource type="Script" path="res://Assets/Scenes/DirectionArrow.gd" id="10_on4ls"]
 [ext_resource type="AudioStream" uid="uid://dm0omq1m8i78s" path="res://Assets/Raw/intro.ogg" id="11_wo71y"]
 [ext_resource type="AudioStream" uid="uid://bedkfg52wkicx" path="res://Assets/Raw/no_intro.ogg" id="12_64qf1"]
 [ext_resource type="Script" path="res://Assets/Scripts/BGMAudio.gd" id="13_mwsm2"]
@@ -124,6 +126,7 @@ layer_0/tile_data = PackedInt32Array(65518, 65536, 1, 65519, 65536, 1, 65520, 65
 script = ExtResource("4_d344f")
 
 [node name="Goal1" type="Area2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(-211, -187)
 collision_layer = 2
 collision_mask = 2
@@ -137,6 +140,7 @@ scale = Vector2(2, 2)
 texture = ExtResource("5_vf3cv")
 
 [node name="Goal2" type="Area2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(2463, -187)
 collision_layer = 2
 collision_mask = 2
@@ -163,6 +167,13 @@ zoom = Vector2(2, 2)
 player_node = NodePath("../..")
 game_controller = NodePath("../../..")
 
+[node name="DirectionArrow" type="Sprite2D" parent="Player"]
+modulate = Color(0.901961, 0.305882, 0.65098, 0.72549)
+texture_filter = 2
+scale = Vector2(0.09, 0.09)
+texture = ExtResource("9_ufigq")
+script = ExtResource("10_on4ls")
+
 [node name="ScreenCover" type="ColorRect" parent="."]
 offset_left = -446.0
 offset_top = -513.0
@@ -172,14 +183,14 @@ color = Color(0, 0, 0, 0.65098)
 
 [node name="Label" type="Label" parent="ScreenCover"]
 layout_mode = 0
-offset_left = 199.0
-offset_top = 220.0
-offset_right = 1543.0
-offset_bottom = 463.0
+offset_left = 190.0
+offset_top = 231.0
+offset_right = 1534.0
+offset_bottom = 474.0
 scale = Vector2(0.322597, 0.474376)
-text = "Make as many deliveries as possible! 
+text = "Complete deliveries to score points!
 
-[WASD] to move, [Shift] to boost
+[WASD] or arrow keys to move, [Shift] or [X] to boost
 [Space] to jump, hold to fly
 [R] to restart
 
@@ -187,6 +198,7 @@ Pick up batteries for energy and coins for extra points!
 
 [Press [Space] to start]"
 label_settings = SubResource("LabelSettings_ekbbi")
+horizontal_alignment = 1
 
 [node name="EndScreen" type="ColorRect" parent="." node_paths=PackedStringArray("game_controller")]
 visible = false
@@ -238,3 +250,4 @@ bus = &"Music"
 [connection signal="finished" from="AudioStart" to="AudioStart/Section2" method="_on_bgm_audio_finished"]
 [connection signal="finished" from="AudioStart/Section2" to="AudioStart/Section2" method="_on_finished"]
 [connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]
+[connection signal="timeout" from="GameTimer" to="Player/DirectionArrow" method="_on_game_timer_timeout"]
