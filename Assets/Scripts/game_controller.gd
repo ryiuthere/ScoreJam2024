@@ -104,3 +104,4 @@ func reset(show_end_screen = false) -> void:
 	$TileMap.randomize_tileset()
 	time = reset_time
 	timer.stop()
+	$Player/DirectionArrow.reset_goal_position()
