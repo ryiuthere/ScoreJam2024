@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cyorto8lufnue"]
+[gd_scene load_steps=24 format=3 uid="uid://cyorto8lufnue"]
 
 [ext_resource type="FontFile" uid="uid://cvqj76mf4ani5" path="res://Assets/Raw/font.ttf" id="1_2mejv"]
 [ext_resource type="Script" path="res://Assets/Scripts/MainMenu.gd" id="1_mxiwd"]
@@ -96,18 +96,23 @@ font_size = 119
 font_color = Color(1, 1, 1, 0.909804)
 outline_color = Color(0, 0, 0, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_srnwa"]
+[sub_resource type="LabelSettings" id="LabelSettings_j3rh6"]
 font = ExtResource("1_2mejv")
 font_size = 119
 font_color = Color(1, 1, 1, 0.909804)
 outline_color = Color(0, 0, 0, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_nqol7"]
+[sub_resource type="LabelSettings" id="LabelSettings_ff6w4"]
 font = ExtResource("1_2mejv")
 font_size = 119
 font_color = Color(1, 1, 1, 0.909804)
-outline_size = 4
-outline_color = Color(1, 1, 1, 0.662745)
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_tqcps"]
+font = ExtResource("1_2mejv")
+font_size = 119
+font_color = Color(1, 1, 1, 0.909804)
+outline_color = Color(0, 0, 0, 1)
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -244,24 +249,75 @@ text = "Enter a name:"
 label_settings = SubResource("LabelSettings_jv1ac")
 horizontal_alignment = 1
 
-[node name="Return" type="Label" parent="SetNameScreen"]
+[node name="LeaderboardScreen" type="ColorRect" parent="."]
 layout_mode = 0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 1914.0
-offset_bottom = 502.0
-scale = Vector2(0.166254, 0.164887)
-text = "[ESC]"
-label_settings = SubResource("LabelSettings_srnwa")
+offset_right = 1154.0
+offset_bottom = 650.0
+color = Color(0, 0, 0, 0.933333)
 
-[node name="ReturnSymbol" type="Label" parent="SetNameScreen"]
-layout_mode = 0
-offset_left = 110.0
-offset_top = -5.0
-offset_right = 2014.0
-offset_bottom = 487.0
+[node name="OtherText" type="Label" parent="LeaderboardScreen"]
+layout_mode = 2
+offset_left = 253.0
+offset_top = 63.0
+offset_right = 2440.0
+offset_bottom = 1748.0
 scale = Vector2(0.286113, 0.286113)
-text = "⏎"
-label_settings = SubResource("LabelSettings_nqol7")
+text = "Top Scores:
+
+
+
+
+[BRU] - 128,000
+[BRU] - 128,000
+[BRU] - 128,000
+[BRU] - 128,000
+[BRU] - 128,000
+[BRU] - 128,000
+[BRU] - 128,000
+[???] - 128,000"
+label_settings = SubResource("LabelSettings_jv1ac")
+horizontal_alignment = 1
+
+[node name="FirstPlace" type="Label" parent="LeaderboardScreen"]
+layout_mode = 2
+offset_left = 253.0
+offset_top = 63.0
+offset_right = 2440.0
+offset_bottom = 1748.0
+scale = Vector2(0.286113, 0.286113)
+text = "
+
+[FIR] - 300,000"
+label_settings = SubResource("LabelSettings_j3rh6")
+horizontal_alignment = 1
+
+[node name="SecondPlace" type="Label" parent="LeaderboardScreen"]
+layout_mode = 2
+offset_left = 253.0
+offset_top = 63.0
+offset_right = 2440.0
+offset_bottom = 1748.0
+scale = Vector2(0.286113, 0.286113)
+text = "
+
+
+[SEC] - 200,000"
+label_settings = SubResource("LabelSettings_ff6w4")
+horizontal_alignment = 1
+
+[node name="ThirdPlace" type="Label" parent="LeaderboardScreen"]
+layout_mode = 2
+offset_left = 253.0
+offset_top = 63.0
+offset_right = 2440.0
+offset_bottom = 1748.0
+scale = Vector2(0.286113, 0.286113)
+text = "
+
+
+
+[THI] - 150,000"
+label_settings = SubResource("LabelSettings_tqcps")
+horizontal_alignment = 1
 
 [connection signal="finished" from="IntroMusic" to="." method="_on_music_finished"]

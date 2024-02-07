@@ -64,10 +64,7 @@ func _input(event) -> void:
 
 func touch_goal(goal: String):
 	if target_goal == goal:
-		if goal == "left":
-			$Goal1.add_child(delivery_particles.instantiate())
-		else:
-			$Goal2.add_child(delivery_particles.instantiate())
+		$Player.add_child(delivery_particles.instantiate())
 		play_goal_sound()
 		target_goal = "right" if goal == "left" else "left"
 		score += delivery_score
