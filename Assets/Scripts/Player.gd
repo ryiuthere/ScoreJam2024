@@ -178,10 +178,13 @@ func refill_fuel(amount: float) -> void:
 func score_pickup() -> void:
 	ScorePickup.emit(500)
 	
-func boost_up(amount: int) -> void:
+func boost_up(amount: int, direction: float) -> void:
 	if can_boost:
 		play_booster()
-		velocity.y = -amount
+		if cos(direction):
+			velocity.y = -amount * cos(direction)
+		elif sin(direction):
+			velocity.x = -amount * sin(direction)
 		can_boost = false
 		$BoostCooldown.start()
 
