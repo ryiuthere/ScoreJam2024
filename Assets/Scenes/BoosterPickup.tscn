@@ -46,6 +46,7 @@ shape = SubResource("RectangleShape2D_bu4qo")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 position = Vector2(0, 14.655)
+amount = 5
 process_material = SubResource("ParticleProcessMaterial_m8w7m")
 lifetime = 0.75
 randomness = 0.31
