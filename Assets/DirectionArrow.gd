@@ -4,6 +4,7 @@ extends Sprite2D
 @onready var player = get_parent()
 @onready var time_since_last := 0
 @onready var started := false
+@onready var blinking := false
 const color := Color(0.878, 0.949, 1, 0.69)
 
 func _ready():
@@ -31,6 +32,11 @@ func _process(_delta):
 		tween2.tween_property(self, "scale", Vector2(0.16, 0.16), 0.5)
 		tween.tween_callback(hide_if_completed)
 	
+	if blinking:
+		self_modulate.a = 0.2 * cos((%GameTimer.time_left + time_since_last) * PI) + 0.8
+	else:
+		self_modulate.a = 1.0
+	
 func calc_angle(v1: Vector2, v2: Vector2) -> float:
 	var a = atan2(v2.y-v1.y, v2.x-v1.x)
 	if a < 0:
@@ -45,15 +51,18 @@ func make_delivery():
 	time_since_last = 0
 	visible = false
 	modulate = Color(1.0, 1.0, 1.0, 0.0)
+	blinking = false
 	
 func hide_if_completed():
+	blinking = true
 	if not started:
 		modulate = Color(1.0, 1.0, 1.0, 0.0)
+		blinking = false
 		
 func reset_goal_position():
+	blinking = false
 	started = false
 	time_since_last = 0
 	modulate = Color(1.0, 1.0, 1.0, 0.0)
 	goal_position = %Goal2.position
 		
-	
