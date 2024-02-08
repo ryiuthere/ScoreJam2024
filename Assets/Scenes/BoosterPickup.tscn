@@ -40,11 +40,13 @@ scale = Vector2(0.5, 0.5)
 script = ExtResource("1_42ja3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1, 1)
+position = Vector2(0, 16)
+scale = Vector2(1, 0.25)
 shape = SubResource("RectangleShape2D_bu4qo")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 position = Vector2(0, 14.655)
+amount = 5
 process_material = SubResource("ParticleProcessMaterial_m8w7m")
 lifetime = 0.75
 randomness = 0.31

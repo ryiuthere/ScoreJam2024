@@ -3,7 +3,7 @@ extends CharacterBody2D
 const MAX_SPEED := Vector2(200,300) # Maximum speed in x and y directions
 const ACCELERATION := 2000 # Direction for horizontal momentum
 const FRICTION := 1200 # Horizontal drag when not moving
-const SLOW_FORCE := 2200 # Force for slowing down to max speed if going over
+const SLOW_FORCE := 1800 # Force for slowing down to max speed if going over
 const GRAVITY := 620 # Gravity
 const JUMP_FORCE := 17500 # Force applied when jumping
 const DASH_FORCE := Vector2(60000,50000) # Force applied when dashing in x or y direction
@@ -82,6 +82,12 @@ func move(delta) -> void:
 		apply_movement(axis * ACCELERATION, delta)
 	
 	if (abs(velocity.x) > MAX_SPEED.x):
+		if velocity.x > 0:
+			apply_friction(SLOW_FORCE * delta, MAX_SPEED.x)
+		else:
+			apply_friction(SLOW_FORCE * delta, -MAX_SPEED.x)
+	
+	if (abs(velocity.x) > (MAX_SPEED.x+10)):
 		$SpriteAnimator.play("dash") 
 	else:
 		if (axis.x > 0):
@@ -140,11 +146,6 @@ func apply_friction(amount: float, target: float) -> void:
 func apply_movement(accel: Vector2, delta: float) -> void:
 	if (abs(velocity.x) <= MAX_SPEED.x or abs(velocity.x + accel.x) <= abs(velocity.x)):
 		velocity += accel * delta
-	if (abs(velocity.x) > MAX_SPEED.x):
-		if velocity.x > 0:
-			apply_friction(SLOW_FORCE * delta, MAX_SPEED.x)
-		else:
-			apply_friction(SLOW_FORCE * delta, -MAX_SPEED.x)
 
 func apply_gravity(amount: float, delta: float) -> void:
 	if (velocity.y < -MAX_SPEED.y):
@@ -178,10 +179,14 @@ func refill_fuel(amount: float) -> void:
 func score_pickup() -> void:
 	ScorePickup.emit(500)
 	
-func boost_up(amount: int) -> void:
+func boost_up(amount: int, direction: float) -> void:
+	var adj = direction + PI / 2
 	if can_boost:
 		play_booster()
-		velocity.y = -amount
+		if abs(sin(adj)) > 0.01:
+			velocity.y = -amount * sin(adj)
+		elif abs(cos(adj)) > 0.01:
+			velocity.x = -amount * cos(adj)
 		can_boost = false
 		$BoostCooldown.start()
 

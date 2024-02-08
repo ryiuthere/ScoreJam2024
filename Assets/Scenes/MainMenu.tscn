@@ -106,6 +106,7 @@ offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_mxiwd")
+metadata/_edit_lock_ = true
 
 [node name="HomeMenu" type="Control" parent="."]
 anchors_preset = 0
@@ -171,7 +172,8 @@ offset = Vector2(30, 25)
 script = ExtResource("4_2jk7u")
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="HomeMenu/Background"]
-motion_mirroring = Vector2(1080, 1080)
+position = Vector2(-1584, -1800)
+motion_mirroring = Vector2(4320, 4320)
 
 [node name="Sprite2D" type="Sprite2D" parent="HomeMenu/Background/ParallaxLayer"]
 texture_filter = 2
