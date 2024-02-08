@@ -179,12 +179,13 @@ func score_pickup() -> void:
 	ScorePickup.emit(500)
 	
 func boost_up(amount: int, direction: float) -> void:
+	var adj = direction + PI / 2
 	if can_boost:
 		play_booster()
-		if cos(direction):
-			velocity.y = -amount * cos(direction)
-		elif sin(direction):
-			velocity.x = -amount * sin(direction)
+		if abs(sin(adj)) > 0.01:
+			velocity.y = -amount * sin(adj)
+		elif abs(cos(adj)) > 0.01:
+			velocity.x = -amount * cos(adj)
 		can_boost = false
 		$BoostCooldown.start()
 

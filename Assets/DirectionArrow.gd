@@ -4,10 +4,10 @@ extends Sprite2D
 @onready var player = get_parent()
 @onready var time_since_last := 0
 @onready var started := false
-const color := Color(0.902, 0.306, 0.651, 0.71)
+const color := Color(0.878, 0.949, 1, 0.69)
 
 func _ready():
-	modulate = Color(0.902, 0.306, 0.651, 0.0)
+	modulate = Color(0.878, 0.949, 1, 0.69)
 	
 func _process(_delta):
 	if player and goal_position:
@@ -15,15 +15,20 @@ func _process(_delta):
 	
 	if time_since_last >= 2.0:
 		visible = true
-	
-	if not started and time_since_last >= 15:
+	if not started and time_since_last >= 2:
 		started = true
 		var tween = get_tree().create_tween()
 		var tween2 = get_tree().create_tween()
-		tween2.tween_property(self, "scale", Vector2(0.11, 0.11), 0.3)
-		tween.tween_property(self, "modulate", Color(1.0, 1.0, 1.0, 0.8), 0.3)
-		tween.tween_property(self, "modulate", color, 0.75)
-		tween2.tween_property(self, "scale", Vector2(0.09, 0.09), 0.75)
+		tween.set_ease(Tween.EASE_OUT)
+		tween.set_trans(Tween.TRANS_CUBIC)
+		tween2.set_ease(Tween.EASE_OUT)
+		tween2.set_trans(Tween.TRANS_CUBIC)
+		tween2.tween_property(self, "scale", Vector2(0.22, 0.22), 0.6)
+		tween.tween_property(self, "modulate", Color(0.89, 0.302, 0.537, 0.886), 0.6)
+		tween.set_ease(Tween.EASE_IN_OUT)
+		tween2.set_ease(Tween.EASE_IN_OUT)
+		tween.tween_property(self, "modulate", color, 0.5)
+		tween2.tween_property(self, "scale", Vector2(0.16, 0.16), 0.5)
 		tween.tween_callback(hide_if_completed)
 	
 func calc_angle(v1: Vector2, v2: Vector2) -> float:
