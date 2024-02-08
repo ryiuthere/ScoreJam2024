@@ -16,7 +16,7 @@ func _process(_delta):
 	
 	if time_since_last >= 2.0:
 		visible = true
-	if not started and time_since_last >= 2:
+	if not started and time_since_last >= 15:
 		started = true
 		var tween = get_tree().create_tween()
 		var tween2 = get_tree().create_tween()
@@ -33,7 +33,7 @@ func _process(_delta):
 		tween.tween_callback(hide_if_completed)
 	
 	if blinking:
-		self_modulate.a = 0.2 * cos((%GameTimer.time_left + time_since_last) * PI) + 0.8
+		self_modulate.a = 0.2 * sin((%GameTimer.time_left + time_since_last-0.15) * PI) + 0.8
 	else:
 		self_modulate.a = 1.0
 	
