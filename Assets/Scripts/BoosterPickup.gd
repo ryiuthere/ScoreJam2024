@@ -6,3 +6,4 @@ func _on_body_entered(body):
 			body.boost_up(750, rotation)
 		else:
 			body.boost_up(1000, rotation)
+	

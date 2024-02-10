@@ -41,7 +41,7 @@ script = ExtResource("1_42ja3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 16)
-scale = Vector2(1, 0.25)
+scale = Vector2(1, 0.3)
 shape = SubResource("RectangleShape2D_bu4qo")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
