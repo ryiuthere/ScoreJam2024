@@ -215,6 +215,7 @@ hframes = 4
 script = ExtResource("4_n3wo6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 0)
 shape = SubResource("CapsuleShape2D_bpknv")
 
 [node name="HoverParticles" type="GPUParticles2D" parent="."]
